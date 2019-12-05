@@ -1,0 +1,45 @@
+{% extends 'base.html.twig' %}
+
+
+{% block body %}
+
+	<div class="col-md-12 col-lg-12 col-xl-12">
+		{% for label, messages in app.flashes %}
+			{% for message in messages %}
+				<div class="alert alert-{{ label }}" role="alert">
+					<span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+					{{ message }}
+				</div>
+			{% endfor %}
+		{% endfor %}
+	</div>
+	{% for recipe in recipes %}
+		<div class="col-6 offset-3">
+			<div class="card bg-light card-register-login">
+				<div class="card-body">
+					<br><div class="card-header">
+						<b>Title:</b>
+						{{ recipe.title }}
+					</div>
+					<div class="card-header">
+						<b>Description:</b>
+						{{ recipe.description }}
+					</div>
+					<div class="card-body">
+						<center><a href="/" class="btn btn-orange">Show</a></center>
+					</div>
+				</div>
+			</div><br><br><br>
+		</div>
+		
+	{% else %}
+		<div class="col-6 offset-3">
+			<div class="card bg-light card-register-login">
+				<div class="card-body">
+					<br><div class="card-header">
+						 <p>No recipes to display</p>
+					</div>
+				</div>
+			</div>
+	{% endfor %}
+{% endblock %}

@@ -16,7 +16,7 @@ class SecurityController extends AbstractController
     {
         if($this->isGranted("IS_AUTHENTICATED_FULLY"))
         {
-            return $this->redirectToRoute("home");
+            return $this->redirectToRoute("show_all_recipe");
         }
         // if ($this->getUser()) {
         //     return $this->redirectToRoute('target_path');

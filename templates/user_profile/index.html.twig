@@ -20,7 +20,7 @@
 			<div class="col-6 offset-3">
 				<div class="card bg-light card-register-login">
 					<div class="card-body">
-						<h1 class="text-center">Your profile</h1>
+						<h1 class="text-center">Your profile, {{ app.user.username }} </h1>
 						{% for userProfile in userProfile %}
 							<br><div class="card-header">
 								<b>First name:</b>

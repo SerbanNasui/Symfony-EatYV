@@ -4,10 +4,14 @@
 {% block body %}
 	{% if app.user %}
 	{% include('nav.html.twig') %}
+	<center><h1>Recipes</h1></center><br>
 	<div class="container">
 		<div class="row">
+			
+			{% include('/recipe/index.html.twig') %}
 		</div>
 	</div>
+	
 		{% else %}
 
 			<div class="background-image">

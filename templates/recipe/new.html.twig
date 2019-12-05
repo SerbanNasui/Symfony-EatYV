@@ -1,0 +1,24 @@
+{% extends 'base.html.twig' %}
+{% block title %}EatYV | New Recipe
+{% endblock %}
+{% block body %}
+	{% include('nav.html.twig') %}<br><br><br><br><br>
+	<div class="container">
+		<div class="row">
+			<div class="col-6 offset-3">
+				<div class="card bg-light">
+					<div class="card-body">
+						<h1 class="text-center">Create User Profile</h1>
+						{% if app.user %}
+							{{ form_start(form) }}
+							{{ form_widget(form) }}
+							{{ form_end(form) }}
+							{% else %}
+						{% endif %}
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	{% include('footer.html.twig') %}
+{% endblock %}

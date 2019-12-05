@@ -2,6 +2,9 @@ composer create-project symfony/skeleton Symfony-EatYV
 composer require annotations twig
 composer require symfony/asset
 composer require debug --dev
+composer require doctrine form security validation
+composer require --dev doctrine/doctrine-fixtures-bundle
+
 
 php bin/console server:run
 
@@ -16,8 +19,6 @@ php bin/console make:controller
 
 Make entity:
 php bin/console make:entity
-
-composer require doctrine form security validation
 
 php bin/console doctrine:database:create
 
