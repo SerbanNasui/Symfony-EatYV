@@ -1,7 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}EatYV |
-	{{ recipe.title }}
+{% block title %} {{ profile.getUserProfileId().getUsername() }} Profile
 {% endblock %}
 
 {% block body %}
@@ -16,22 +15,18 @@
 
 						<br><div class="card-header">
 							<b>Title:</b>
-							{{ recipe.title }}
+							{{ profile.firstName }}
 						</div>
 						<div class="card-body">
 							<b>Description:</b>
-							{{ recipe.description }}
+							{{ profile.secondName }}
 						</div>
 
 						<div class="card-header">
 							<center>
-								<a href="/" class="btn btn-dark">Back</a>
+                                <button onclick="window.history.go(-1); return false;" class="btn btn-orange">Back to recipe</button>
 							</center>
 						</div>
-						<div class="card-body">
-							<center><a href="/show-owner-profile/{{ recipe.getAuthor().getUserId() }}" class="btn btn-orange">See who created this recipe</a></center>
-						</div>
-						
 					</div>
 				</div>
 			</div>

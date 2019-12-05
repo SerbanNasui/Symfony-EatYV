@@ -7,6 +7,7 @@ use Symfony\Component\Routing\Annotation\Route;
 
 use App\Entity\Recipe;
 use App\Entity\User;
+use App\Entity\UserProfile;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
@@ -164,6 +165,17 @@ class RecipeController extends AbstractController
         $this->entityManager->flush();
         $this->addFlash('success', 'Recipe was deleted!');
         return $this->redirectToRoute('user_own_recipes');
+    }
+
+    /**
+     * @Route("/show-owner-profile/{id}", name="show_owner_profile")
+     */
+    public function showOwnerProfileAction($id)
+    {
+        $profile = $this->userProfileRepository->findOneByUserProfileId($id);
+        return $this->render('recipe/show-owner-profile.html.twig', array(
+            'profile' => $profile
+        ));
     }
 
 
