@@ -80,6 +80,92 @@ class RecipeController extends AbstractController
         ]);
     }
 
+    /**
+     * @Route("/show-recipe/{id}", name="show_recipe")
+     */
+    public function showRecipeAction($id)
+    {
+        $recipe = $this->recipeRepository->findOneByRecipeId($id);
+        if (!$recipe) {
+            $this->addFlash('error', 'Unable to find entry!');
+            return $this->redirectToRoute('show_all_recipe');
+        }
+        return $this->render('recipe/show-recipe.html.twig', array(
+            'recipe' => $recipe
+        ));
+    }
+
+    /**
+     * @Route("/own-recipes", name="user_own_recipes")
+     *
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function showYourOwnRecipesAction()
+    {
+        $author = $this->userRepository->findOneByUsername($this->getUser()->getUserName());
+        $recipes = [];
+        if ($author) {
+            $recipes = $this->recipeRepository->findByUserAuthor($author);
+        }
+        return $this->render('recipe/own-recipes.html.twig', [
+            'recipes' => $recipes
+        ]);
+    }
+
+
+    /**
+     * @Route("/edit-recipe/{id}", name="edit_recipe")
+     * Method({"GET", "POST"})
+     */
+    public function editRecipeAction(Request $request, $id) 
+    {
+        $recipe = new Recipe();
+        $recipe = $this->getDoctrine()->getRepository(Recipe::class)->find($id);
+        $form = $this->createFormBuilder($recipe)
+          ->add('title', TextType::class, array('attr' => array('class' => 'form-control')))
+          ->add('description', TextareaType::class, array(
+            'required' => false,
+            'attr' => array('class' => 'form-control')
+          ))
+          ->add('save', SubmitType::class, array(
+            'label' => 'Update',
+            'attr' => array('class' => 'btn btn-orange mt-3')
+          ))
+          ->getForm();
+        $form->handleRequest($request);
+        if($form->isSubmitted() && $form->isValid()) {
+          $entityManager = $this->getDoctrine()->getManager();
+          $entityManager->flush();
+          return $this->redirectToRoute('user_own_recipes');
+        }
+    
+        $this->addFlash('success', 'Recipe is up-to-date!');
+        return $this->render('recipe/edit-recipe.html.twig', array(
+          'form' => $form->createView()
+        ));
+    }
+
+    /**
+     * @Route("/delete-recipe/{recipeId}", name="delete_recipe")
+     *
+     * @param $recipeId
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     */
+    public function deleteRecipeAction($recipeId)
+    {
+        $recipe = $this->recipeRepository->findOneByRecipeId($recipeId);
+        $author = $this->userRepository->findOneByUsername($this->getUser()->getUserName());
+        if (!$recipe || $author !== $recipe->getAuthor()) {
+            $this->addFlash('error', 'Unable to remove recipe!');
+            return $this->redirectToRoute('user_own_recipes');
+        }
+        $this->entityManager->remove($recipe);
+        $this->entityManager->flush();
+        $this->addFlash('success', 'Recipe was deleted!');
+        return $this->redirectToRoute('user_own_recipes');
+    }
+
 
 
 }

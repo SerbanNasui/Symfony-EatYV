@@ -25,7 +25,6 @@
 
 .btn-orange:hover {
     background-color: #F56416;
-    /* Green */
     color: white;
 }
 
@@ -58,4 +57,25 @@ footer {
     text-align: center;
     text-decoration: none;
     box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.btn-danger:hover {
+    background-color: rgb(131, 4, 4);
+    color: white;
+}
+
+.position-button {
+    margin-left: 53px;
+}
+
+.btn-dark {
+    border-radius: 8px;
+    text-align: center;
+    text-decoration: none;
+    box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.btn-dark:hover {
+    background-color: rgb(161, 155, 152);
+    color: white;
 }

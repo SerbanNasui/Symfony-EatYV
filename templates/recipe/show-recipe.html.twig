@@ -1,0 +1,38 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}EatYV |
+	{{ recipe.title }}
+{% endblock %}
+
+{% block body %}
+	{% include('nav.html.twig') %}<br>
+	<div class="container">
+		<div class="row">
+
+			<div class="col-6 offset-3">
+				<div class="card bg-light card-register-login">
+					<div class="card-body">
+
+
+						<br><div class="card-header">
+							<b>Title:</b>
+							{{ recipe.title }}
+						</div>
+						<div class="card-body">
+							<b>Description:</b>
+							{{ recipe.description }}
+						</div>
+
+						<div class="card-header">
+							<center>
+								<a href="/" class="btn btn-orange">Back</a>
+							</center>
+						</div>
+
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	{% include('footer.html.twig') %}
+{% endblock %}

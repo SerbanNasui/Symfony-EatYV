@@ -1,0 +1,54 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+	{% include('nav.html.twig') %}
+	<center>
+		<h2>Your own recipes</h2>
+	</center><br>
+	<div class="container">
+		<div class="row">
+			<div class="col-md-12 col-lg-12 col-xl-12">
+				{% for label, messages in app.flashes %}
+					{% for message in messages %}
+						<div class="alert alert-{{ label }}" role="alert">
+							<span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+							{{ message }}
+						</div>
+					{% endfor %}
+				{% endfor %}
+			</div>
+			{% for recipe in recipes %}
+				<div class="col-6 offset-3">
+					<div class="card bg-light card-register-login">
+						<div class="card-body">
+							<br><div class="card-header">
+								<b>Title:</b>
+								{{ recipe.title }}
+							</div>
+							<div class="card-body">
+								<b>Description:</b>
+								{{ recipe.description }}
+							</div>
+							<div class="card-header">
+								<a href="/show-recipe/{{ recipe.recipeId }}" class="btn btn-orange">Show recipe</a>
+
+								<a href="/edit-recipe/{{ recipe.recipeId }}" class="btn btn-dark position-button">Edit recipe</a>
+
+								<a href="{{ path('delete_recipe', {'recipeId': recipe.recipeId}) }}" class="btn btn-danger pull-right">Delete recipe</a>
+							</div>
+						</div>
+					</div><br><br><br>
+				</div>
+
+			{% else %}
+				<div class="col-6 offset-3">
+					<div class="card bg-light card-register-login">
+						<div class="card-body">
+							<br><div class="card-header">
+								<p>No recipes to display</p>
+							</div>
+						</div>
+					</div>
+				{% endfor %}
+			</div>
+		</div>
+	{% endblock %}
