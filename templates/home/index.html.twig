@@ -1,11 +1,13 @@
 {% extends 'base.html.twig' %}
-
 {% block title %}EatYV
 {% endblock %}
 {% block body %}
 	{% if app.user %}
-    <a href="{{ path('app_logout') }}" class="btn btn-orange">Logout</a>
-	
+	{% include('nav.html.twig') %}
+	<div class="container">
+		<div class="row">
+		</div>
+	</div>
 		{% else %}
 
 			<div class="background-image">
