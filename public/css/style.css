@@ -28,3 +28,8 @@
     /* Green */
     color: white;
 }
+
+.card-register-login {
+    box-shadow: 14px 10px 49px 2px rgba(219, 176, 125, 1);
+    opacity: 0.9;
+}
