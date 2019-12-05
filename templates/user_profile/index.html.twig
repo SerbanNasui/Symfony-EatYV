@@ -1,0 +1,48 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}EatYV | Profile
+{% endblock %}
+
+{% block body %}
+	{% include('nav.html.twig') %}<br><br>
+	<div class="container">
+		<div class="row">
+			<div class="col-6 offset-3">
+				<div class="card bg-light card-register-login">
+					<div class="card-body">
+						<h1 class="text-center">Your profile</h1>
+						{% for userProfile in userProfile %}
+							<br><div class="card-header">
+								<b>First name:</b>
+								{{ userProfile.firstName }}
+                            </div>
+							<div class="card-body">
+								<b>Second name:</b>
+								{{ userProfile.secondName }}
+                            </div>
+							<div class="card-header">
+								<b>Biography:</b>
+								{{ userProfile.biography }}
+                            </div>
+                            <div class="card-body">
+                                <a href="/user-profile/edit/{{ app.user.userId }}" class="btn btn-orange">Edit your profile</a>
+								
+								<a href="/delete-profile/{{app.user.userId}}" class="btn btn-danger pull-right">Delete your profile</a> 
+                                
+                            </div>
+					{% else %}
+						<br><div class="card-header">
+						<p>Your profile dosen't exist, create one:
+							<a href="{{ path('create_profile') }}" class="btn btn-orange pull-right">Create your profile</a>
+						</p>
+                        </div>
+
+
+					{% endfor %}
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+{% include('footer.html.twig') %}
+{% endblock %}

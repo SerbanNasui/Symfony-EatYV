@@ -1,0 +1,23 @@
+{% extends 'base.html.twig' %}
+{% block title %}Eat YV | Create User Profile
+{% endblock %}
+{% block body %}
+	{% include('nav.html.twig') %}<br><br><br><br><br>
+	<div class="container">
+		<div class="row">
+			<div class="col-6 offset-3">
+				<div class="card bg-light">
+					<div class="card-body">
+						<h1 class="text-center">Create User Profile</h1>
+						{{ form_start(createProfileForm) }}
+						{{ form_row(createProfileForm.firstName) }}
+						{{ form_row(createProfileForm.secondName) }}
+						{{ form_row(createProfileForm.biography) }}
+						{{ form_end(createProfileForm) }}
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+{% include('footer.html.twig') %}
+{% endblock %}

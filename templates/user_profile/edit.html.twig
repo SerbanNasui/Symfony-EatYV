@@ -1,0 +1,25 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit Your Profile
+{% endblock %}
+
+{% block body %}
+	{% include 'nav.html.twig' %}
+	<div class="container">
+		<div class="row">
+			<div class="col-6 offset-3">
+				<div class="card bg-light">
+					<div class="card-body">
+						<h1 class="text-center">Edit User Profile</h1>
+						{{ form_start(form) }}
+						{{ form_widget(form) }}
+						{{ form_end(form) }}
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+	{% include 'footer.html.twig' %}
+{% endblock %}
