@@ -119,6 +119,9 @@ class UserProfileController extends AbstractController
             $entityManager->flush();
             return $this->redirectToRoute('user_profile');
         }
+        $this->entityManager->persist($userProfile);
+        $this->entityManager->flush($userProfile);
+        $this->addFlash('warning', ' Your user profile was changed');
         return $this->render('user_profile/edit.html.twig', array(
             'form' => $form->createView()
         ));

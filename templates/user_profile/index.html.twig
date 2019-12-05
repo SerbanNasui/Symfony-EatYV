@@ -4,9 +4,19 @@
 {% endblock %}
 
 {% block body %}
-	{% include('nav.html.twig') %}<br><br>
+	{% include('nav.html.twig') %}<br>
 	<div class="container">
 		<div class="row">
+		<div class="col-md-12 col-lg-12 col-xl-12">
+			{% for label, messages in app.flashes %}
+				{% for message in messages %}
+					<div class="alert alert-{{ label }}" role="alert">
+						<span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+						{{ message }}
+					</div>
+				{% endfor %}
+			{% endfor %}
+		</div>
 			<div class="col-6 offset-3">
 				<div class="card bg-light card-register-login">
 					<div class="card-body">
