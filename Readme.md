@@ -4,6 +4,7 @@ composer require symfony/asset
 composer require debug --dev
 composer require doctrine form security validation
 composer require --dev doctrine/doctrine-fixtures-bundle
+composer require symfony/expression-language
 
 
 php bin/console server:run

@@ -29,12 +29,20 @@
 							</center>
 						</div>
 						<div class="card-body">
-							<center><a href="/show-owner-profile/{{ recipe.getAuthor().getUserId() }}" class="btn btn-orange">See who created this recipe</a></center>
+							{% if recipe.getAuthor().getUserId() == app.user.userId %}
+								<a href="/edit-recipe/{{ recipe.recipeId }}" class="btn btn-dark">Edit recipe</a>
+								<a href="{{ path('delete_recipe', {'recipeId': recipe.recipeId}) }}" class="btn btn-danger pull-right">Delete recipe</a>
+							{% else %}
+								<center>
+									<a href="/show-owner-profile/{{ recipe.getAuthor().getUserId() }}" class="btn btn-orange">See who created this recipe</a>
+								</center>
+							{% endif %}
 						</div>
-						
 					</div>
 				</div>
 			</div>
+			{# include reservations and reviews #}
+			{# {% include('reservation/new.html.twig') %} 
 		</div>
 	</div>
 	{% include('footer.html.twig') %}
