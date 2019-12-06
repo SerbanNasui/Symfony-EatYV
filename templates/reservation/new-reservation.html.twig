@@ -10,20 +10,18 @@
 					<div class="card-body">
 						<h1 class="text-center">Create reservation</h1>
 						{% if app.user %}
-							{{ form_start(form) }}
-								{{ form_row(form.reservationForFirstName) }}
-								{{ form_row(form.reservationForSecondName) }}
-								{{ form_row(form.userReservaionId) }}
-								{{ form_row(form.recipeReservaionId) }}
-								{{ form_row(form.message) }}
-
-						<button class="btn btn-orange btn-block">Register</button>
-						{{ form_end(form) }}
+								{{ form_start(reservationForm) }}
+									{{ form_row(reservationForm.reservationForFirstName) }}
+									{{ form_row(reservationForm.reservationForSecondName) }}
+									{{ form_row(reservationForm.recipeReservaionId) }}
+									{{ form_row(reservationForm.message) }}
+									<button class="btn btn-orange btn-block">Create reservation</button>
+								{{ form_end(reservationForm) }}
 							{% else %}
 						{% endif %}
 					</div>
 				</div>
-			</div>
+			</div> 
 		</div>
 	</div>
 	{% include('footer.html.twig') %}

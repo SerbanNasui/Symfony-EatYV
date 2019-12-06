@@ -71,16 +71,20 @@ class ReservationController extends AbstractController
     public function newReservationAction(Request $request)
     {
         $reservation = new Reservation();
-        $form = $this->createForm(ReservationFormType::class, $reservation);
-        $form->handleRequest($request);
+
+        $reservationAuthor = $this->userRepository->findOneByUsername($this->getUser()->getUserName());
+        $reservation->setUserReservaionId($reservationAuthor);
+
+        $reservationForm = $this->createForm(ReservationFormType::class, $reservation);
+        $reservationForm->handleRequest($request);
   
-        if ($form->isSubmitted() && $form->isValid()) {
+        if ($reservationForm->isSubmitted() && $reservationForm->isValid()) {
             
-            $user = $form['userReservaionId']->getData();
-            $recipe = $form['recipeReservaionId']->getData();
+            // $user = $form['userReservaionId']->getData();
+            $recipe = $reservationForm['recipeReservaionId']->getData();
         
             
-            $reservation->setUserReservaionId($user);
+            // $reservation->setUserReservaionId($user);
             $reservation->setRecipeReservaionId($recipe);
             
             $em = $this->getDoctrine()->getManager();
@@ -90,9 +94,9 @@ class ReservationController extends AbstractController
             return $this->redirectToRoute('show_all_recipe', array('reservationId' => $reservation->getReservationId()));
         }
 
-        return $this->render('reservation/new.html.twig', array(
+        return $this->render('reservation/new-reservation.html.twig', array(
             'reservation' => $reservation,
-            'form' => $form->createView(),
+            'reservationForm' => $reservationForm->createView(),
         ));
     }
 
@@ -111,4 +115,8 @@ class ReservationController extends AbstractController
             'reservation' => $reservation
         ));
     }
+
+    //edit reservation
+    
+    //delete reservation
 }

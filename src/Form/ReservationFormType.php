@@ -46,12 +46,12 @@ class ReservationFormType extends AbstractType
                     'attr' => ['class' => 'form-control']
                 ]
             )
-            ->add(
-                'userReservaionId', 
-                EntityType::class, 
-                array('class' => 'App:User', 'choice_label' => 'username', 
-                'attr' => array('class' => 'form-control', 'style' => 'margin-bottom:15px'))
-            )
+            // ->add(
+            //     'userReservaionId', 
+            //     EntityType::class, 
+            //     array('class' => 'App:User', 'choice_label' => 'username', 
+            //     'attr' => array('class' => 'form-control', 'style' => 'margin-bottom:15px'))
+            // )
 
             ->add(
                 'recipeReservaionId', 
