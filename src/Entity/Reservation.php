@@ -171,7 +171,7 @@ class Reservation
      *
      * @return Reservation
      */
-    public function setRecipeReservaionId(User $recipeReservaionId)
+    public function setRecipeReservaionId(Recipe $recipeReservaionId)
     {
         $this->recipeReservaionId = $recipeReservaionId;
         return $this;

@@ -62,39 +62,39 @@ class ReservationController extends AbstractController
         ]);
     }
 
-    // /**
-    //  *
-    //  * @Route("/new-reservation", name="reservation_new")
-    //  * @Method({"GET", "POST"})
-    //  * @Security("is_granted('IS_AUTHENTICATED_FULLY')")
-    //  */
-    // public function newReservationAction(Request $request)
-    // {
-    //     $reservation = new Reservation();
-    //     $form = $this->createForm(ReservationFormType::class, $reservation);
-    //     $form->handleRequest($request);
+    /**
+     *
+     * @Route("/new-reservation", name="reservation_new")
+     * @Method({"GET", "POST"})
+     * @Security("is_granted('IS_AUTHENTICATED_FULLY')")
+     */
+    public function newReservationAction(Request $request)
+    {
+        $reservation = new Reservation();
+        $form = $this->createForm(ReservationFormType::class, $reservation);
+        $form->handleRequest($request);
   
-    //     if ($form->isSubmitted() && $form->isValid()) {
+        if ($form->isSubmitted() && $form->isValid()) {
             
-    //         $user = $form['user']->getData();
-    //         $recipe = $form['recipe']->getData();
+            $user = $form['userReservaionId']->getData();
+            $recipe = $form['recipeReservaionId']->getData();
         
             
-    //         $reservation->setUserReservaionId($user);
-    //         $reservation->setRecipeReservaionId($recipe);
+            $reservation->setUserReservaionId($user);
+            $reservation->setRecipeReservaionId($recipe);
             
-    //         $em = $this->getDoctrine()->getManager();
-    //         $em->persist($reservation);
-    //         $em->flush();
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($reservation);
+            $em->flush();
 
-    //         return $this->redirectToRoute('show_all_recipe', array('reservationId' => $reservation->getReservationId()));
-    //     }
+            return $this->redirectToRoute('show_all_recipe', array('reservationId' => $reservation->getReservationId()));
+        }
 
-    //     return $this->render('reservation/new.html.twig', array(
-    //         'reservation' => $reservation,
-    //         'form' => $form->createView(),
-    //     ));
-    // }
+        return $this->render('reservation/new.html.twig', array(
+            'reservation' => $reservation,
+            'form' => $form->createView(),
+        ));
+    }
 
 
     /**
