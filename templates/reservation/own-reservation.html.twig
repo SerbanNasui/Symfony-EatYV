@@ -22,7 +22,12 @@
 				<div class="col-6 offset-3">
 					<div class="card bg-light card-register-login">
 						<div class="card-body">
-							<br><div class="card-header">
+						<center>
+							<h2><b> Recipe name: {{ reservation.getRecipeReservaionId().title }}</b></h2>
+							<h3><b> Recipe owner: {{ reservation.getUserReservaionId().username }}</b></h3>
+						</center>
+							<br>
+							<div class="card-header">
 								<b>Reservation for:</b>
 								{{ reservation.reservationForFirstName }}
 								{{ reservation.reservationForSecondName }}
@@ -55,9 +60,9 @@
 					</div>
 				{% endfor %}
 			</div>
-			<center>
+			{# <center>
 				<button onclick="window.history.go(-1); return false;" class="btn btn-orange">Back to profile</button>
-			</center>
+			</center> #}
 		</div>
 	</div>
 	{% include('footer.html.twig') %}

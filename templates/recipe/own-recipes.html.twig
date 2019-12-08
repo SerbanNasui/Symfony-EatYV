@@ -35,6 +35,11 @@
 
 								<a href="{{ path('delete_recipe', {'recipeId': recipe.recipeId}) }}" class="btn btn-danger pull-right">Delete recipe</a>
 							</div>
+							<div class="card-body">
+								<center>
+									<a href="/show-reservations-for-specific-recipe/{{ recipe.recipeId }}" class="btn btn-orange">Check if you have reservations for this recipe</a>
+								</center>
+							</div>
 						</div>
 					</div><br><br><br>
 				</div>

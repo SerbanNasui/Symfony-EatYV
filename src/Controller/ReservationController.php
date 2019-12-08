@@ -92,7 +92,7 @@ class ReservationController extends AbstractController
             $em->persist($reservation);
             $em->flush();
 
-            return $this->redirectToRoute('show_all_recipe', array('reservationId' => $reservation->getReservationId()));
+            return $this->redirectToRoute('own_reservation', array('reservationId' => $reservation->getReservationId()));
         }
 
         return $this->render('reservation/new-reservation.html.twig', array(
