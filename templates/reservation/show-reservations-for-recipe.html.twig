@@ -4,7 +4,7 @@
 {% block body %}
 	{% include('nav.html.twig') %}
 	<center>
-		<h2>Your reservations</h2>
+		<h2>Your reservations for this recipe</h2>
 	</center><br>
 	<div class="container">
 		<div class="row">
@@ -18,27 +18,18 @@
 					{% endfor %}
 				{% endfor %}
 			</div>
-			{% for reservation in reservation %}
+			{% for showReservation in showReservation %}
 				<div class="col-6 offset-3">
 					<div class="card bg-light card-register-login">
 						<div class="card-body">
 							<br><div class="card-header">
 								<b>Reservation for:</b>
-								{{ reservation.reservationForFirstName }}
-								{{ reservation.reservationForSecondName }}
+								{{ showReservation.reservationForFirstName }}
+								{{ showReservation.reservationForSecondName }}
 							</div>
 							<div class="card-body">
 								<b>Message:</b>
-								{{ reservation.message }}
-							</div>
-							<div class="card-header">
-								<a href="/edit-reservation/{{ reservation.reservationId }}" class="btn btn-dark">Edit reservation</a>
-								<a href="{{ path('delete_reservation', {'reservationId': reservation.reservationId }) }}" class="btn btn-danger pull-right">Delete reservation</a>
-							</div>
-							<div class="card-header">
-								<center>
-									<a href="/show-recipe/{{ reservation.getRecipeReservaionId().recipeId }}" class="btn btn-orange"> Go to recipe</a>
-								</center>
+								{{ showReservation.message }}
 							</div>
 						</div>
 					</div><br><br><br>
@@ -49,16 +40,16 @@
 					<div class="card bg-light card-register-login">
 						<div class="card-body">
 							<br><div class="card-header">
-								<p>No reservations to display</p>
+								<p>Nobody have reservations for this recipe</p>
 							</div>
 						</div>
 					</div>
 				{% endfor %}
 			</div>
 			<center>
-				<button onclick="window.history.go(-1); return false;" class="btn btn-orange">Back to profile</button>
+				<button onclick="window.history.go(-1); return false;" class="btn btn-orange">Back to recipe</button>
 			</center>
 		</div>
-	</div>
-	{% include('footer.html.twig') %}
+    </div>
+    {% include('footer.html.twig') %}
 {% endblock %}

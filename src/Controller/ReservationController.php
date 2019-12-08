@@ -173,4 +173,24 @@ class ReservationController extends AbstractController
         return $this->redirectToRoute('own_reservation');
     }
 
+    /**
+     * @Route("/show-reservations-for-specific-recipe/{id}", name="show_reservations_for_specific_recipe")
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function showReservationForSpecificRecipe($id)
+    {
+        // gaseste reteta
+        // cauta toate rezervarile facute pt reteta 
+        // afiseaza rezervarile retetei 
+
+        $recipeReservation = $this->recipeRepository->findOneByRecipeId($id);
+        $showReservation = [];
+        if ($recipeReservation) {
+            $showReservation = $this->reservationRepository->findByRecipeReservaionId($id);
+        }
+
+        return $this->render('reservation/show-reservations-for-recipe.html.twig', [
+            'showReservation' => $showReservation
+        ]);
+    }
 }
