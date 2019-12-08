@@ -101,29 +101,12 @@ class ReservationController extends AbstractController
         ));
     }
 
-
-    /**
-     * @Route("/show-reservation/{id}", name="show_reservation")
-     */
-    public function showReservationAction($id)
-    {
-        $reservation = $this->reservationRepository->findOneByReservationId($id);
-        if (!$reservation) {
-            $this->addFlash('error', 'Unable to find entry!');
-            return $this->redirectToRoute('show_all_recipe');
-        }
-        return $this->render('reservation/show-reservation.html.twig', array(
-            'reservation' => $reservation
-        ));
-    }
-
- 
     /**
      * @Route("/own-reservation", name="own_reservation")
      *
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function showYourOwnRecipesAction()
+    public function showYourOwnReservationAction()
     {
         $author = $this->userRepository->findOneByUsername($this->getUser()->getUserName());
         $reservation = [];
@@ -134,7 +117,60 @@ class ReservationController extends AbstractController
             'reservation' => $reservation
         ]);
     }
-    //edit your reservation
     
-    //delete your reservation
+    /**
+     * @Route("/edit-reservation/{id}", name="edit_reservation")
+     * Method({"GET", "POST"})
+     */
+    public function editReservationAction(Request $request, $id) 
+    {
+        $reservation = new Reservation();
+        $reservation = $this->getDoctrine()->getRepository(Reservation::class)->find($id);
+        $form = $this->createFormBuilder($reservation)
+          ->add('reservationForFirstName', TextType::class, array('attr' => array('class' => 'form-control')))
+          ->add('reservationForSecondName', TextType::class, array('attr' => array('class' => 'form-control')))
+          ->add('message', TextareaType::class, array(
+            'required' => false,
+            'attr' => array('class' => 'form-control')
+          ))
+          ->add('save', SubmitType::class, array(
+            'label' => 'Update reservation',
+            'attr' => array('class' => 'btn btn-orange mt-3')
+          ))
+          ->getForm();
+        $form->handleRequest($request);
+
+        if($form->isSubmitted() && $form->isValid()) {
+          $entityManager = $this->getDoctrine()->getManager();
+          $entityManager->flush();
+          return $this->redirectToRoute('own_reservation');
+        }
+    
+        $this->addFlash('success', 'Reservation is up-to-date!');
+        return $this->render('reservation/edit-reservation.html.twig', array(
+          'form' => $form->createView()
+        ));
+    }
+    
+    /**
+     * @Route("/delete-reservation/{reservationId}", name="delete_reservation")
+     *
+     * @param $reservationId
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     */
+    public function deleteReservationAction($reservationId)
+    {
+        $reservation = $this->reservationRepository->findOneByReservationId($reservationId);
+        $author = $this->userRepository->findOneByUsername($this->getUser()->getUserName());
+        if (!$reservation || $author !== $reservation->getUserReservaionId()) {
+            $this->addFlash('error', 'Unable to remove recipe!');
+            return $this->redirectToRoute('user_own_recipes');
+        }
+        $this->entityManager->remove($reservation);
+        $this->entityManager->flush();
+        $this->addFlash('success', 'Reservation was deleted!');
+        return $this->redirectToRoute('own_reservation');
+    }
+
 }

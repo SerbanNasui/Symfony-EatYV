@@ -1,35 +1,57 @@
 {% extends 'base.html.twig' %}
 
-{% block title %} {{ profile.getUserProfileId().getUsername() }} Profile
+{% block title %}
+	{% if profile.userProfileId is defined %}
+		{{ profile.getUserProfileId().getUsername() }}
+		Profile
+	{% else %}
+		Profile
+	{% endif %}
 {% endblock %}
 
 {% block body %}
+
 	{% include('nav.html.twig') %}<br>
 	<div class="container">
 		<div class="row">
-
-			<div class="col-6 offset-3">
-				<div class="card bg-light card-register-login">
-					<div class="card-body">
-
-
-						<br><div class="card-header">
-							<b>Title:</b>
-							{{ profile.firstName }}
-						</div>
+			{% if profile.userProfileId is defined %}
+				<div class="col-6 offset-3">
+					<div class="card bg-light card-register-login">
 						<div class="card-body">
-							<b>Description:</b>
-							{{ profile.secondName }}
-						</div>
 
-						<div class="card-header">
-							<center>
-                                <button onclick="window.history.go(-1); return false;" class="btn btn-orange">Back to recipe</button>
-							</center>
+
+							<br><div class="card-header">
+								<b>Title:</b>
+								{{ profile.firstName }}
+							</div>
+							<div class="card-body">
+								<b>Description:</b>
+								{{ profile.secondName }}
+							</div>
+
+							<div class="card-header">
+								<center>
+									<button onclick="window.history.go(-1); return false;" class="btn btn-orange">Back to recipe</button>
+								</center>
+							</div>
 						</div>
 					</div>
 				</div>
-			</div>
+			{% else %}
+				<div class="col-6 offset-3">
+					<div class="card bg-light card-register-login">
+						<div class="card-body">
+							<br>
+							<div class="card-header">
+								<p>User dosen't have profile.</p>
+								<center>
+									<button onclick="window.history.go(-1); return false;" class="btn btn-orange">Back to recipe</button>
+								</center>
+							</div>
+						</div>
+					</div>
+				</div>
+			{% endif %}
 		</div>
 	</div>
 	{% include('footer.html.twig') %}
