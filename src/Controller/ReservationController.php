@@ -64,16 +64,19 @@ class ReservationController extends AbstractController
 
     /**
      *
-     * @Route("/new-reservation", name="reservation_new")
+     * @Route("/new-reservation/{id}", name="reservation_new")
      * @Method({"GET", "POST"})
      * @Security("is_granted('IS_AUTHENTICATED_FULLY')")
      */
-    public function newReservationAction(Request $request)
+    public function newReservationAction(Request $request, $id)
     {
         $reservation = new Reservation();
 
         $reservationAuthor = $this->userRepository->findOneByUsername($this->getUser()->getUserName());
         $reservation->setUserReservaionId($reservationAuthor);
+
+        $reservationRecipe = $this->recipeRepository->findOneByRecipeId($id);
+        $reservation->setRecipeReservaionId($reservationRecipe);
 
         $reservationForm = $this->createForm(ReservationFormType::class, $reservation);
         $reservationForm->handleRequest($request);
@@ -81,11 +84,9 @@ class ReservationController extends AbstractController
         if ($reservationForm->isSubmitted() && $reservationForm->isValid()) {
             
             // $user = $form['userReservaionId']->getData();
-            $recipe = $reservationForm['recipeReservaionId']->getData();
-        
-            
+            //$recipe = $reservationForm['recipeReservaionId']->getData();
             // $reservation->setUserReservaionId($user);
-            $reservation->setRecipeReservaionId($recipe);
+            //$reservation->setRecipeReservaionId($recipe);
             
             $em = $this->getDoctrine()->getManager();
             $em->persist($reservation);
@@ -116,6 +117,8 @@ class ReservationController extends AbstractController
         ));
     }
 
+    //show your reservations
+    
     //edit reservation
     
     //delete reservation

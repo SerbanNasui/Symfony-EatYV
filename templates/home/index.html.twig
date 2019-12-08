@@ -3,24 +3,21 @@
 {% endblock %}
 {% block body %}
 	{% if app.user %}
-	{% include('nav.html.twig') %}
-	<center><h1>Recipes</h1></center><br>
-	<div class="container">
-		<div class="row">
-			
-			{% include('/recipe/index.html.twig') %}
-		</div>
-	</div>
-	
-		{% else %}
-
-			<div class="background-image">
-				<div class="small-6 small-centered columns">
-					<a href="{{ path('app_register') }}" class="btn btn-orange">Get Started</a>
-					<a href="{{ path('app_login') }}" class="btn btn-orange">Sign In</a>
-
-				</div>
+		{% include('nav.html.twig') %}
+		<center>
+			<h1>Recipes</h1>
+		</center><br>
+		<div class="container">
+			<div class="row">
+				{% include('/recipe/index.html.twig') %}
 			</div>
+		</div>
+	{% else %}
+		<div class="background-image">
+			<div class="small-6 small-centered columns">
+				<a href="{{ path('app_register') }}" class="btn btn-orange">Get Started</a>
+				<a href="{{ path('app_login') }}" class="btn btn-orange">Sign In</a>
+			</div>
+		</div>
 	{% endif %}
-
 {% endblock %}

@@ -45,20 +45,7 @@ class ReservationFormType extends AbstractType
                     'constraints' => [new NotBlank()],
                     'attr' => ['class' => 'form-control']
                 ]
-            )
-            // ->add(
-            //     'userReservaionId', 
-            //     EntityType::class, 
-            //     array('class' => 'App:User', 'choice_label' => 'username', 
-            //     'attr' => array('class' => 'form-control', 'style' => 'margin-bottom:15px'))
-            // )
-
-            ->add(
-                'recipeReservaionId', 
-                EntityType::class, 
-                array('class' => 'App:Recipe', 'choice_label' => 'title', 
-                'attr' => array('class' => 'form-control', 'style' => 'margin-bottom:15px'))
-            );
+            );      
     }
     /**
      * {@inheritdoc}

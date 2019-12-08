@@ -41,9 +41,15 @@
 					</div>
 				</div>
 			</div>
-			{# include reservations and reviews #}
-			{# {% include('/reservation/new-reservation.html.twig') %} #}
 		</div>
+		<br><br>
+		{% if recipe.getAuthor().getUserId() == app.user.userId %}
+		{# 
+			show if you have reservation from users for this recipe
+		 #}
+		{% else %}
+			<center><a href="/new-reservation/{{ recipe.recipeId }}" class="btn btn-orange" target="_blank">Create reservation</a></center>
+		{% endif %}
 	</div>
 	{% include('footer.html.twig') %}
 {% endblock %}
