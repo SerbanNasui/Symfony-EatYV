@@ -117,9 +117,24 @@ class ReservationController extends AbstractController
         ));
     }
 
-    //show your reservations
+ 
+    /**
+     * @Route("/own-reservation", name="own_reservation")
+     *
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function showYourOwnRecipesAction()
+    {
+        $author = $this->userRepository->findOneByUsername($this->getUser()->getUserName());
+        $reservation = [];
+        if ($author) {
+            $reservation = $this->reservationRepository->findByUserReservaionId($author);
+        }
+        return $this->render('reservation/own-reservation.html.twig', [
+            'reservation' => $reservation
+        ]);
+    }
+    //edit your reservation
     
-    //edit reservation
-    
-    //delete reservation
+    //delete your reservation
 }

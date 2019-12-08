@@ -1,0 +1,53 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+	{% include('nav.html.twig') %}
+	<center>
+		<h2>Your reservations</h2>
+	</center><br>
+	<div class="container">
+		<div class="row">
+			<div class="col-md-12 col-lg-12 col-xl-12">
+				{% for label, messages in app.flashes %}
+					{% for message in messages %}
+						<div class="alert alert-{{ label }}" role="alert">
+							<span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+							{{ message }}
+						</div>
+					{% endfor %}
+				{% endfor %}
+			</div>
+			{% for reservation in reservation %}
+				<div class="col-6 offset-3">
+					<div class="card bg-light card-register-login">
+						<div class="card-body">
+							<br><div class="card-header">
+							<b>Reservation for:</b>
+							{{ reservation.reservationForFirstName }} {{ reservation.reservationForSecondName }}
+						</div>
+						<div class="card-body">
+							<b>Message:</b>
+							{{ reservation.message }}
+						</div>
+							<div class="card-header">
+							
+							</div>
+						</div>
+					</div><br><br><br>
+				</div>
+
+			{% else %}
+				<div class="col-6 offset-3">
+					<div class="card bg-light card-register-login">
+						<div class="card-body">
+							<br><div class="card-header">
+								<p>No reservations to display</p>
+							</div>
+						</div>
+					</div>
+				{% endfor %}
+			</div>
+            <center>
+                <button onclick="window.history.go(-1); return false;" class="btn btn-orange">Back to profile</button>
+			</center>
+		</div>
+	{% endblock %}
