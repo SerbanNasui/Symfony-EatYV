@@ -14,6 +14,8 @@ composer require symfony/expression-language
 
 composer require gedmo/doctrine-extensions
 
+composer require knplabs/knp-paginator-bundle
+
 
 php bin/console server:run
 
