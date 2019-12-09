@@ -23,6 +23,7 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use App\Service\UploaderHelper;
+use Knp\Component\Pager\PaginatorInterface;
 
 
 class RecipeController extends AbstractController
@@ -56,10 +57,28 @@ class RecipeController extends AbstractController
     /**
      * @Route("/", name="show_all_recipe")
      */
-    public function viewAllRecipesAction()
+    public function viewAllRecipesAction(PaginatorInterface $paginator, Request $request)
     {
-        $recipes = $this->getDoctrine()->getRepository(Recipe::class)->findAll();
-        return $this->render('home/index.html.twig', array('recipes' => $recipes));
+        $recipesRepository = $this->getDoctrine()->getManager()->getRepository(Recipe::class);
+        $allRecipesQuery = $recipesRepository->createQueryBuilder('p')
+            ->where('p.recipeId != :recipeId')
+            ->setParameter('recipeId', 'canceled')
+            ->getQuery();
+        
+        $recipes = $paginator->paginate(
+            $allRecipesQuery,
+            $request->query->getInt('page', 1),
+            // Items per page
+            5
+        );
+        
+        return $this->render('home/index.html.twig', [
+            'recipes' => $recipes
+        ]);
+    
+
+        // $recipes = $this->getDoctrine()->getRepository(Recipe::class)->findAll();
+        // return $this->render('home/index.html.twig', array('recipes' => $recipes));
     }
 
     /**
