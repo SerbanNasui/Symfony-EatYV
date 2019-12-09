@@ -17,6 +17,12 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Form\RecipeFormType;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
+use App\Service\UploaderHelper;
+
 
 class RecipeController extends AbstractController
 {
@@ -62,7 +68,7 @@ class RecipeController extends AbstractController
      *
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function createRecipeAction(Request $request)
+    public function createRecipeAction(Request $request, UploaderHelper $uploaderHelper)
     {
         $recipePost = new Recipe();
         $author = $this->userRepository->findOneByUsername($this->getUser()->getUserName());
@@ -71,6 +77,15 @@ class RecipeController extends AbstractController
         $form->handleRequest($request);
         // Check is valid
         if ($form->isSubmitted() && $form->isValid()) {
+
+           
+           /** @var UploadedFile $uploadedFile */
+           $uploadedFile = $form['image']->getData();
+           if ($uploadedFile) {
+               $newFilename = $uploaderHelper->uploadImage($uploadedFile);
+               $recipePost->setImage($newFilename);
+           }
+
             $this->entityManager->persist($recipePost);
             $this->entityManager->flush($recipePost);
             $this->addFlash('success', 'Congratulations! Your recipe is created');
@@ -118,7 +133,7 @@ class RecipeController extends AbstractController
      * @Route("/edit-recipe/{id}", name="edit_recipe")
      * Method({"GET", "POST"})
      */
-    public function editRecipeAction(Request $request, $id) 
+    public function editRecipeAction(Request $request, $id, UploaderHelper $uploaderHelper) 
     {
         $recipe = new Recipe();
         $recipe = $this->getDoctrine()->getRepository(Recipe::class)->find($id);
@@ -128,6 +143,16 @@ class RecipeController extends AbstractController
             'required' => false,
             'attr' => array('class' => 'form-control')
           ))
+          ->add( 
+            'image', 
+            FileType::class, 
+            [
+            'label' => 'Please upload images',
+            'mapped' => false,
+            'attr' => ['class' => 'form-control'],
+            'required' => false
+            ]
+          )
           ->add('save', SubmitType::class, array(
             'label' => 'Update',
             'attr' => array('class' => 'btn btn-orange mt-3')
@@ -135,9 +160,15 @@ class RecipeController extends AbstractController
           ->getForm();
         $form->handleRequest($request);
         if($form->isSubmitted() && $form->isValid()) {
-          $entityManager = $this->getDoctrine()->getManager();
-          $entityManager->flush();
-          return $this->redirectToRoute('user_own_recipes');
+            /** @var UploadedFile $uploadedFile */
+            $uploadedFile = $form['image']->getData();
+            if ($uploadedFile) {
+                $newFilename = $uploaderHelper->uploadImage($uploadedFile);
+                $recipe->setImage($newFilename);
+            }
+            $entityManager = $this->getDoctrine()->getManager();
+             $entityManager->flush();
+             return $this->redirectToRoute('user_own_recipes');
         }
     
         $this->addFlash('success', 'Recipe is up-to-date!');

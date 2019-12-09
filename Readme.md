@@ -1,10 +1,18 @@
 composer create-project symfony/skeleton Symfony-EatYV
+
 composer require annotations twig
+
 composer require symfony/asset
+
 composer require debug --dev
+
 composer require doctrine form security validation
+
 composer require --dev doctrine/doctrine-fixtures-bundle
+
 composer require symfony/expression-language
+
+composer require gedmo/doctrine-extensions
 
 
 php bin/console server:run

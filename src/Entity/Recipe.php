@@ -27,6 +27,14 @@ class Recipe
      * @ORM\Column(name="description", type="string", length=2000)
      */
     private $description;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="image", type="string")
+     */
+    private $image;
+
     /**
      * @var User
      *
@@ -87,6 +95,29 @@ class Recipe
     {
         return $this->description;
     }
+
+    /**
+     * Set image
+     *
+     * @param string $image
+     *
+     * @return Recipe
+     */
+    public function setImage($image)
+    {
+        $this->image = $image;
+        return $this;
+    }
+    /**
+     * Get image
+     *
+     * @return string
+     */
+    public function getImage()
+    {
+        return $this->image;
+    }
+
     /**
      * Set userAuthor
      *

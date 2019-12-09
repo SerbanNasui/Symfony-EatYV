@@ -1,4 +1,7 @@
 {
+    "behat/transliterator": {
+        "version": "v1.2.0"
+    },
     "doctrine/annotations": {
         "version": "1.0",
         "recipe": {
@@ -101,6 +104,9 @@
         "files": [
             "./config/packages/dev/easy_log_handler.yaml"
         ]
+    },
+    "gedmo/doctrine-extensions": {
+        "version": "v2.4.38"
     },
     "jdorn/sql-formatter": {
         "version": "v1.2.17"
