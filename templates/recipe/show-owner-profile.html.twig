@@ -18,18 +18,27 @@
 				<div class="col-6 offset-3">
 					<div class="card bg-light card-register-login">
 						<div class="card-body">
-
-
-							<br><div class="card-header">
-								<b>Title:</b>
-								{{ profile.firstName }}
+							<br>
+							<div class="card-header">
+							<center><img src="{{ asset('uploads/') ~ profile.profileImage }}" width="300" ></center>
 							</div>
 							<div class="card-body">
-								<b>Description:</b>
-								{{ profile.secondName }}
-							</div>
-
+								<b>First name:</b>
+								{{ profile.firstName }}
+                            </div>
 							<div class="card-header">
+								<b>Second name:</b>
+								{{ profile.secondName }}
+                            </div>
+							<div class="card-body">
+								<b>Biography:</b>
+								{{ profile.biography }}
+                            </div>
+							<div class="card-header">
+								<b>Email:</b>
+								{{ profile.getUserProfileId().getEmail() }}
+                            </div>
+							<div class="card-heabodyder"><br>
 								<center>
 									<button onclick="window.history.go(-1); return false;" class="btn btn-orange">Back to recipe</button>
 								</center>

@@ -18,6 +18,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Form\ReservationFormType;
+use App\Form\EditReservationFormType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 
@@ -126,18 +127,7 @@ class ReservationController extends AbstractController
     {
         $reservation = new Reservation();
         $reservation = $this->getDoctrine()->getRepository(Reservation::class)->find($id);
-        $form = $this->createFormBuilder($reservation)
-          ->add('reservationForFirstName', TextType::class, array('attr' => array('class' => 'form-control')))
-          ->add('reservationForSecondName', TextType::class, array('attr' => array('class' => 'form-control')))
-          ->add('message', TextareaType::class, array(
-            'required' => false,
-            'attr' => array('class' => 'form-control')
-          ))
-          ->add('save', SubmitType::class, array(
-            'label' => 'Update reservation',
-            'attr' => array('class' => 'btn btn-orange mt-3')
-          ))
-          ->getForm();
+        $form = $this->createForm(EditReservationFormType::class, $reservation);
         $form->handleRequest($request);
 
         if($form->isSubmitted() && $form->isValid()) {

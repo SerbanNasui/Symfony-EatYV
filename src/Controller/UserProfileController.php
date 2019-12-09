@@ -9,16 +9,25 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Component\HttpFoundation\Response;
 use App\Entity\User;
 use App\Entity\UserProfile;
+use App\Service\UploaderHelper;
 use App\Form\UserProfileFormType;
-use App\Repository\UserRepository;
+use App\Form\EditUserProfileFormType;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
+use App\Repository\UserRepository;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
-use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use App\Entity\Recipe;
+use Symfony\Component\OptionsResolver\OptionsResolver;
+use App\Form\RecipeFormType;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
+
 class UserProfileController extends AbstractController
 {
 
@@ -57,7 +66,7 @@ class UserProfileController extends AbstractController
      *
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function createUserProfileAction(Request $request)
+    public function createUserProfileAction(Request $request, UploaderHelper $uploaderHelper)
     {
         $userProfile = new UserProfile();
         $author = $this->userRepository->findOneByUsername($this->getUser()->getUserName());
@@ -66,6 +75,14 @@ class UserProfileController extends AbstractController
         $form->handleRequest($request);
         // Check is valid
         if ($form->isSubmitted() && $form->isValid()) {
+
+            /** @var UploadedFile $uploadedFile */
+           $uploadedFile = $form['profileImage']->getData();
+           if ($uploadedFile) {
+               $newFilename = $uploaderHelper->uploadImage($uploadedFile);
+               $userProfile->setProfileImage($newFilename);
+           }
+
             $this->entityManager->persist($userProfile);
             $this->entityManager->flush($userProfile);
             $this->addFlash('success', 'Congratulations! Your user profile is created');
@@ -97,24 +114,21 @@ class UserProfileController extends AbstractController
      * @Route("/user-profile/edit/{userId}", name="edit_user_profile")
      * Method({"GET", "POST"})
      */
-    public function editUserProfileAction(Request $request, $userId)
+    public function editUserProfileAction(Request $request, $userId, UploaderHelper $uploaderHelper)
     {
         $userProfile = new UserProfile();
         $userProfile = $this->getDoctrine()->getRepository(UserProfile::class)->find($userId);
-        $form = $this->createFormBuilder($userProfile)
-            ->add('firstName', TextType::class, array('attr' => array('class' => 'form-control')))
-            ->add('secondName', TextType::class, array('attr' => array('class' => 'form-control')))
-            ->add('biography', TextareaType::class, array(
-                'required' => false,
-                'attr' => array('class' => 'form-control')
-            ))
-            ->add('save', SubmitType::class, array(
-                'label' => 'Update',
-                'attr' => array('class' => 'btn btn-orange mt-3')
-            ))
-            ->getForm();
+        $form = $this->createForm(EditUserProfileFormType::class, $userProfile);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
+
+            /** @var UploadedFile $uploadedFile */
+            $uploadedFile = $form['profileImage']->getData();
+            if ($uploadedFile) {
+                $newFilename = $uploaderHelper->uploadImage($uploadedFile);
+                $userProfile->setProfileImage($newFilename);
+            }
+
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->flush();
             return $this->redirectToRoute('user_profile');

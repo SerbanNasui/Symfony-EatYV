@@ -37,6 +37,13 @@ class UserProfile
     private $biography;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(name="profile_image", type="string")
+     */
+    private $profileImage;
+
+    /**
      * Set userProfileAuthor
      *
      * @param User $userProfileId
@@ -126,5 +133,27 @@ class UserProfile
     public function getBiography()
     {
         return $this->biography;
+    }
+
+    /**
+     * Set profileImage
+     *
+     * @param string $profileImage
+     *
+     * @return Recipe
+     */
+    public function setProfileImage($profileImage)
+    {
+        $this->profileImage = $profileImage;
+        return $this;
+    }
+    /**
+     * Get profileImage
+     *
+     * @return string
+     */
+    public function getProfileImage()
+    {
+        return $this->profileImage;
     }
 }

@@ -17,6 +17,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Form\RecipeFormType;
+use App\Form\EditRecipeFormType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Response;
@@ -137,27 +138,7 @@ class RecipeController extends AbstractController
     {
         $recipe = new Recipe();
         $recipe = $this->getDoctrine()->getRepository(Recipe::class)->find($id);
-        $form = $this->createFormBuilder($recipe)
-          ->add('title', TextType::class, array('attr' => array('class' => 'form-control')))
-          ->add('description', TextareaType::class, array(
-            'required' => false,
-            'attr' => array('class' => 'form-control')
-          ))
-          ->add( 
-            'image', 
-            FileType::class, 
-            [
-            'label' => 'Please upload images',
-            'mapped' => false,
-            'attr' => ['class' => 'form-control'],
-            'required' => false
-            ]
-          )
-          ->add('save', SubmitType::class, array(
-            'label' => 'Update',
-            'attr' => array('class' => 'btn btn-orange mt-3')
-          ))
-          ->getForm();
+        $form = $this->createForm(EditRecipeFormType::class, $recipe);
         $form->handleRequest($request);
         if($form->isSubmitted() && $form->isValid()) {
             /** @var UploadedFile $uploadedFile */

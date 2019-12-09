@@ -22,19 +22,23 @@
 					<div class="card-body">
 						<h1 class="text-center">Your profile, {{ app.user.username }} </h1>
 						{% for userProfile in userProfile %}
-							<br><div class="card-header">
+							<br>
+							<div class="card-header">
+							<center><img src="{{ asset('uploads/') ~ userProfile.profileImage }}" width="300" ></center>
+							</div>
+							<div class="card-body">
 								<b>First name:</b>
 								{{ userProfile.firstName }}
                             </div>
-							<div class="card-body">
+							<div class="card-header">
 								<b>Second name:</b>
 								{{ userProfile.secondName }}
                             </div>
-							<div class="card-header">
+							<div class="card-body">
 								<b>Biography:</b>
 								{{ userProfile.biography }}
                             </div>
-                            <div class="card-body">
+                            <div class="card-header">
                                 <a href="/user-profile/edit/{{ app.user.userId }}" class="btn btn-orange">Edit your profile</a>
 								
 								<a href="/delete-profile/{{app.user.userId}}" class="btn btn-danger pull-right">Delete your profile</a> 
