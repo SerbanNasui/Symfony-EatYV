@@ -37,6 +37,14 @@
 								{{ reservation.message }}
 							</div>
 							<div class="card-header">
+								<b>Persons arriving:</b>
+								{{ reservation.personsParticipate }}
+							</div>
+							<div class="card-body">
+								<b>Date arriving:</b>
+								{{ reservation.dateTimeComing|date("d/m/Y g:ia") }}
+							</div>
+							<div class="card-header">
 								<a href="/edit-reservation/{{ reservation.reservationId }}" class="btn btn-dark">Edit reservation</a>
 								<a href="{{ path('delete_reservation', {'reservationId': reservation.reservationId }) }}" class="btn btn-danger pull-right">Delete reservation</a>
 							</div>

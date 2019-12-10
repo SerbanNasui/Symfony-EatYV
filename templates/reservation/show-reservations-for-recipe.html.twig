@@ -34,6 +34,14 @@
 								<b>Message:</b>
 								{{ showReservation.message }}
 							</div>
+							<div class="card-header">
+								<b>Persons arriving:</b>
+								{{ showReservation.personsParticipate }}
+							</div>
+							<div class="card-body">
+								<b>Date arriving:</b>
+								{{ showReservation.dateTimeComing|date("d/m/Y g:ia") }}
+							</div>
 						</div>
 					</div><br><br><br>
 				</div>

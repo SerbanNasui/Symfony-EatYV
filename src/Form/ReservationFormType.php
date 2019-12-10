@@ -13,6 +13,8 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
+use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
+use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 
 class ReservationFormType extends AbstractType
 {
@@ -39,11 +41,35 @@ class ReservationFormType extends AbstractType
                 ]
             )
             ->add(
+                'personsParticipate',
+                IntegerType::class,
+                [
+                    'constraints' => [new NotBlank()],
+                    'attr' => ['class' => 'form-control']
+                ]
+            )
+            ->add(
+                'dateTimeComing',
+                DateTimeType::class,
+                [
+                    'constraints' => [new NotBlank()],
+                    
+                ]
+            )
+            ->add(
                 'message',
                 TextareaType::class,
                 [
                     'constraints' => [new NotBlank()],
                     'attr' => ['class' => 'form-control']
+                ]
+            )
+            ->add(
+                'create',
+                SubmitType::class,
+                [
+                    'attr' => ['class' => 'form-control btn-orange pull-right'],
+                    'label' => 'Create reservation!'
                 ]
             );      
     }

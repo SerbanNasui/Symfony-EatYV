@@ -11,11 +11,8 @@
 						<h1 class="text-center">Create reservation</h1>
 						{% if app.user %}
 								{{ form_start(reservationForm) }}
-									{{ form_row(reservationForm.reservationForFirstName) }}
-									{{ form_row(reservationForm.reservationForSecondName) }}
-									{{ form_row(reservationForm.message) }}
-									<button class="btn btn-orange btn-block">Create reservation</button>
-								{{ form_end(reservationForm) }}
+							{{ form_widget(reservationForm) }}
+							{{ form_end(reservationForm) }}
 							{% else %}
 						{% endif %}
 					</div>

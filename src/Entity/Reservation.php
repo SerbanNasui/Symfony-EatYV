@@ -38,6 +38,19 @@ class Reservation
     private $message;
 
     /**
+     * @var integer
+     *
+     * @ORM\Column(name="persons_participate", type="integer")
+     */
+    private $personsParticipate;
+
+    /**
+     *
+     * @ORM\Column(name="date_time_coming", type="datetime")
+     */
+    private $dateTimeComing;
+
+    /**
      * @var User
      *
      * @ORM\ManyToOne(targetEntity="User")
@@ -184,5 +197,55 @@ class Reservation
     public function getRecipeReservaionId()
     {
         return $this->recipeReservaionId;
+    }
+
+    // ////////////////////////////// get and set for personsParticipate ////////////////////////////////////////////////
+
+    /**
+     * Set personsParticipate
+     *
+     * @param string $personsParticipate
+     *
+     * @return Reservation
+     */
+    public function setPersonsParticipate($personsParticipate)
+    {
+        $this->personsParticipate = $personsParticipate;
+        return $this;
+    }
+
+    /**
+     * Get personsParticipate
+     *
+     * @return string
+     */
+    public function getPersonsParticipate()
+    {
+        return $this->personsParticipate;
+    }
+
+    // ////////////////////////////// get and set for dateTimeComing ////////////////////////////////////////////////
+
+    /**
+     * Set dateTimeComing
+     *
+     * @param string $dateTimeComing
+     *
+     * @return Reservation
+     */
+    public function setDateTimeComing($dateTimeComing)
+    {
+        $this->dateTimeComing = $dateTimeComing;
+        return $this;
+    }
+
+    /**
+     * Get dateTimeComing
+     *
+     * @return string
+     */
+    public function getDateTimeComing()
+    {
+        return $this->dateTimeComing;
     }
 }

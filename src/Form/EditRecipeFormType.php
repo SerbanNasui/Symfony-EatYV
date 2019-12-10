@@ -11,6 +11,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\CountryType;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
+use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\MoneyType;
 
 class EditRecipeFormType extends AbstractType
@@ -22,7 +23,7 @@ class EditRecipeFormType extends AbstractType
       ->add('dateStart', DateTimeType::class)
       ->add('dateEnd', DateTimeType::class)
       ->add('price', MoneyType::class, array('attr' => array('class' => 'form-control')))
-      ->add('maxNrPersons', TextType::class, array('attr' => array('class' => 'form-control')))
+      ->add('maxNrPersons', IntegerType::class, array('attr' => array('class' => 'form-control')))
       ->add('address', TextType::class, array('attr' => array('class' => 'form-control')))
       ->add('city', TextType::class, array('attr' => array('class' => 'form-control')))
       ->add('country', CountryType::class, array('attr' => array('class' => 'form-control')))
