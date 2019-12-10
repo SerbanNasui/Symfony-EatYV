@@ -17,20 +17,30 @@
 		<div class="col-6 offset-3">
 			<div class="card bg-light card-register-login">
 				<div class="card-body">
-					<br><div class="card-header">
-								<center><img src="{{ asset('uploads/') ~ recipe.image }}" width="300" ></center>
-							</div>
-					
+					<br>
+					<div class="card-header">
+						<center><img src="{{ asset('uploads/') ~ recipe.image }}" width="300"></center>
+					</div>
 					<div class="card-body">
 						<b>Title:</b>
 						{{ recipe.title }}
 					</div>
 					<div class="card-header">
-						<b>Description:</b>
-						{{ recipe.description }}
+							<b>Date start/end:</b>
+							{{ recipe.dateStart|date("d/m/Y g:ia") }} | {{ recipe.dateEnd|date("d/m/Y g:ia") }}
 					</div>
 					<div class="card-body">
-						<center><a href="/show-recipe/{{ recipe.recipeId }}" class="btn btn-orange">Show recipe</a></center>
+						<b>Price:</b>
+						{{ recipe.price }}
+					</div>
+					<div class="card-header">
+						<b>Address:</b>
+							{{ recipe.address }} {{ recipe.city }} {{ recipe.country }}
+					</div>
+					<div class="card-body">
+						<center>
+							<a href="/show-recipe/{{ recipe.recipeId }}" class="btn btn-orange">Show recipe</a>
+						</center>
 					</div>
 				</div>
 			</div><br><br><br>
@@ -40,14 +50,14 @@
 			<div class="card bg-light card-register-login">
 				<div class="card-body">
 					<br><div class="card-header">
-						 <p>No recipes to display</p>
+						<p>No recipes to display</p>
 					</div>
 				</div>
 			</div>
-	{% endfor %}
-	<div class="container">
-		<div class="navigation text-center">
-        	{{ knp_pagination_render(recipes) }}
-    	</div>
-	</div>
-{% endblock %}
+		{% endfor %}
+		<div class="container">
+			<div class="navigation text-center">
+				{{ knp_pagination_render(recipes) }}
+			</div>
+		</div>
+	{% endblock %}

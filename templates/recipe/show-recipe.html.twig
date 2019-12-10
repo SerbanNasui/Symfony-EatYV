@@ -20,6 +20,24 @@
 							{{ recipe.title }}
 						</div>
 						<div class="card-header">
+							<p><b>Date start:</b>
+							{{ recipe.dateStart|date("d/m/Y g:ia") }}</p>
+							<p><b>Date end:</b>
+							{{ recipe.dateEnd|date("d/m/Y g:ia") }}</p>
+						</div>
+						<div class="card-body">
+							<b>Price:</b>
+							{{ recipe.price }}
+						</div>
+						<div class="card-header">
+							<b>Persons can come:</b>
+							{{ recipe.maxNrPersons }}
+						</div>
+						<div class="card-body">
+							<b>Address:</b>
+							{{ recipe.address }} {{ recipe.city }} {{ recipe.country }}
+						</div>
+						<div class="card-header">
 							<b>Description:</b>
 							{{ recipe.description }}
 						</div>
@@ -53,5 +71,5 @@
 			</center>
 		{% endif %}
 	</div>
-	{% include('footer.html.twig') %}
+	<br><br><br><br>
 {% endblock %}

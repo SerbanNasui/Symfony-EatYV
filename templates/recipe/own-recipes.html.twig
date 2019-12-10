@@ -20,16 +20,29 @@
 				<div class="col-6 offset-3">
 					<div class="card bg-light card-register-login">
 						<div class="card-body">
-							<br><div class="card-header">
-								<center><img src="{{ asset('uploads/') ~ recipe.image }}" width="300" ></center>
+							<br>
+							<div class="card-header">
+								<center><img src="{{ asset('uploads/') ~ recipe.image }}" width="300"></center>
 							</div>
 							<div class="card-body">
 								<b>Title:</b>
 								{{ recipe.title }}
 							</div>
 							<div class="card-header">
-								<b>Description:</b>
-								{{ recipe.description }}
+								<b>Date start/end:</b>
+								{{ recipe.dateStart|date("d/m/Y g:ia") }}
+								|
+								{{ recipe.dateEnd|date("d/m/Y g:ia") }}
+							</div>
+							<div class="card-body">
+								<b>Price:</b>
+								{{ recipe.price }}
+							</div>
+							<div class="card-header">
+								<b>Address:</b>
+								{{ recipe.address }}
+								{{ recipe.city }}
+								{{ recipe.country }}
 							</div>
 							<div class="card-body">
 								<a href="/show-recipe/{{ recipe.recipeId }}" class="btn btn-orange">Show recipe</a>

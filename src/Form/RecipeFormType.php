@@ -1,6 +1,9 @@
 <?php
 namespace App\Form;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\CountryType;
+use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
+use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -8,6 +11,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
+use Symfony\Component\Form\Extension\Core\Type\MoneyType;
 use Symfony\Component\Validator\Constraints\Image;
 use Symfony\Component\Validator\Constraints\NotNull;
 
@@ -37,6 +41,62 @@ class RecipeFormType extends AbstractType
             ->add(
                 'title',
                 TextType::class,
+                [
+                    'constraints' => [new NotBlank()],
+                    'attr' => ['class' => 'form-control']
+                ]
+            )
+            ->add(
+                'dateStart',
+                DateTimeType::class,
+                [
+                    'constraints' => [new NotBlank()],
+                    
+                ]
+            )
+            ->add(
+                'dateEnd',
+                DateTimeType::class,
+                [
+                    'constraints' => [new NotBlank()],
+                    
+                ]
+            )
+            ->add(
+                'price',
+                MoneyType::class,
+                [
+                    'constraints' => [new NotBlank()],
+                    'attr' => ['class' => 'form-control']
+                ]
+            )
+            ->add(
+                'maxNrPersons',
+                TextType::class,
+                [
+                    'constraints' => [new NotBlank()],
+                    'attr' => ['class' => 'form-control']
+                ]
+            )
+            ->add(
+                'address',
+                TextType::class,
+                [
+                    'constraints' => [new NotBlank()],
+                    'attr' => ['class' => 'form-control']
+                ]
+            )
+            ->add(
+                'city',
+                TextType::class,
+                [
+                    'constraints' => [new NotBlank()],
+                    'attr' => ['class' => 'form-control']
+                ]
+            )
+            ->add(
+                'country',
+                CountryType::class,
                 [
                     'constraints' => [new NotBlank()],
                     'attr' => ['class' => 'form-control']
