@@ -17,6 +17,13 @@ composer require gedmo/doctrine-extensions
 composer require knplabs/knp-paginator-bundle
 
 
+composer require --dev phpunit
+
+Tests: 
+php bin/phpunit
+./vendor/bin/phpunit
+
+
 php bin/console server:run
 
 MakerBundle:

@@ -82,7 +82,7 @@ class RecipeController extends AbstractController
     }
 
     /**
-     * @Route("/new", name="new_recipe")
+     * @Route("/new-recipe", name="new_recipe")
      *
      * @param Request $request
      *

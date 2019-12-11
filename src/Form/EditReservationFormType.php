@@ -48,4 +48,12 @@ class EditReservationFormType extends AbstractType
     {
         return 'userAuthor_form';
     }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getBlockPrefix()
+    {
+        return 'app_reservation';
+    }
 }

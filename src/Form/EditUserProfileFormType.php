@@ -56,4 +56,12 @@ class EditUserProfileFormType extends AbstractType
     {
         return 'userProfileAuthor_form';
     }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getBlockPrefix()
+    {
+        return 'app_userprofile';
+    }
 }
