@@ -86,23 +86,32 @@ class RecipeReviewController extends AbstractController
         $recipeReviewForm->handleRequest($request);
   
         if ($recipeReviewForm->isSubmitted() && $recipeReviewForm->isValid()) {
-            
-            // $user = $form['userReservaionId']->getData();
-            //$recipe = $reservationForm['recipeReservaionId']->getData();
-            // $reservation->setUserReservaionId($user);
-            //$reservation->setRecipeReservaionId($recipe);
-            
             $em = $this->getDoctrine()->getManager();
             $em->persist($recipeReview);
             $em->flush();
-
-            //return $this->redirectToRoute('show_all_recipe', array('recipeReviewId' => $recipeReview->getRecipeReviewId()));
+            $this->addFlash('success', 'Review was created!');
         }
-
-        //return $this->render('recipe/show-recipe.html.twig', array(
+        
         return $this->render('recipe_review/new-recipe-review.html.twig', array(
             'recipeReview' => $recipeReview,
             'recipeReviewForm' => $recipeReviewForm->createView(),
         ));
+    }
+
+    /**
+     * @Route("/show-reviews-for-specific-recipe/{id}", name="show_reviews_for_specific_recipe")
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function showReviewsForSpecificRecipe($id)
+    {
+        $recipeReview = $this->recipeRepository->findOneByRecipeId($id);
+        $showReview = [];
+        if ($recipeReview) {
+            $showReview = $this->recipeReviewRepository->findByRecipeReviewRecipeId($id);
+        }
+
+        return $this->render('recipe_review/show-reviews-for-recipe.html.twig', [
+            'showReview' => $showReview
+        ]);
     }
 }

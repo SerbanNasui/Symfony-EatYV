@@ -1,10 +1,10 @@
 {% extends 'base.html.twig' %}
-{% block title %}EatYV | Your reservations
+{% block title %}EatYV | 
 {% endblock %}
 {% block body %}
 	{% include('nav.html.twig') %}
 	<center>
-		<h2>Your reservations for this recipe</h2>
+		<h2>Reviews for this recipe</h2>
 	</center><br>
 	<div class="container">
 		<div class="row">
@@ -18,40 +18,27 @@
 					{% endfor %}
 				{% endfor %}
 			</div>
-			{% for showReservation in showReservation %}
-				<div class="col-6 offset-3">
+			{% for showReview in showReview %}
+				<div class="col-6 offset-3"> 
 					<div class="card bg-light card-register-login">
 						<div class="card-body">
-                        <center>
-							<h3><b> User name: {{ showReservation.getUserReservaionId().username }}</b></h3>
-						</center>
-							<br><div class="card-header">
-								<b>Reservation for:</b>
-								{{ showReservation.reservationForFirstName }}
-								{{ showReservation.reservationForSecondName }}
+							<div class="card-header">
+								<b>Grade:</b>
+								{{ showReview.grade }}
 							</div>
 							<div class="card-body">
 								<b>Message:</b>
-								{{ showReservation.message }}
-							</div>
-							<div class="card-header">
-								<b>Persons arriving:</b>
-								{{ showReservation.personsParticipate }}
-							</div>
-							<div class="card-body">
-								<b>Date arriving:</b>
-								{{ showReservation.dateTimeComing|date("d/m/Y g:ia") }}
+								{{ showReview.comment }}
 							</div>
 						</div>
-					</div><br><br><br>
+					</div><br>
 				</div>
-
 			{% else %}
 				<div class="col-6 offset-3">
 					<div class="card bg-light card-register-login">
 						<div class="card-body">
 							<br><div class="card-header">
-								<p>Nobody have reservations for this recipe</p>
+								<p>This recipe has no reviews</p>
 							</div>
 						</div>
 					</div>

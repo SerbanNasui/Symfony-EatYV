@@ -169,10 +169,6 @@ class ReservationController extends AbstractController
      */
     public function showReservationForSpecificRecipe($id)
     {
-        // gaseste reteta
-        // cauta toate rezervarile facute pt reteta 
-        // afiseaza rezervarile retetei 
-
         $recipeReservation = $this->recipeRepository->findOneByRecipeId($id);
         $showReservation = [];
         if ($recipeReservation) {

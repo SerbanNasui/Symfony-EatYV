@@ -2,8 +2,16 @@
 {% block title %}EatYV | New Review
 {% endblock %}
 {% block body %}
-	{% include('nav.html.twig') %}<br><br><br><br><br>
+	{% include('nav.html.twig') %}
 	<div class="container">
+	{% for label, messages in app.flashes %}
+			{% for message in messages %}
+				<div class="alert alert-{{ label }}" role="alert">
+					<span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+					{{ message }}
+				</div>
+			{% endfor %}
+		{% endfor %}<br><br>
 		<div class="row">
 			<div class="col-6 offset-3">
 				<div class="card bg-light">
