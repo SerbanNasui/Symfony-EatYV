@@ -1,5 +1,5 @@
 {% extends 'base.html.twig' %}
-{% block title %}EatYV | 
+{% block title %}EatYV
 {% endblock %}
 {% block body %}
 	{% include('nav.html.twig') %}
@@ -19,7 +19,7 @@
 				{% endfor %}
 			</div>
 			{% for showReview in showReview %}
-				<div class="col-6 offset-3"> 
+				<div class="col-6 offset-3">
 					<div class="card bg-light card-register-login">
 						<div class="card-body">
 							<div class="card-header">
@@ -31,6 +31,11 @@
 								{{ showReview.comment }}
 							</div>
 						</div>
+						{% if showReview.getUserReviewRecipeId().getUserId() == app.user.userId %}
+							<div class="card-header">
+								<a href="/delete-recipe-review/{{ showReview.recipeReviewId }}" class="btn btn-danger pull-right">Delete review</a>
+							</div>
+						{% endif %}
 					</div><br>
 				</div>
 			{% else %}
@@ -48,5 +53,5 @@
 				<button onclick="window.history.go(-1); return false;" class="btn btn-orange">Back to recipe</button>
 			</center><br>
 		</div>
-    </div>
+	</div>
 {% endblock %}

@@ -16,6 +16,8 @@ composer require gedmo/doctrine-extensions
 
 composer require knplabs/knp-paginator-bundle
 
+composer require twig/intl-extra
+
 
 composer require --dev phpunit
 

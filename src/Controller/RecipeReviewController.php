@@ -114,4 +114,25 @@ class RecipeReviewController extends AbstractController
             'showReview' => $showReview
         ]);
     }
+
+    //edit and delete function
+    /**
+     * @Route("/delete-recipe-review/{reviewId}", name="delete_recipe_review")
+     *
+     * @param $reviewId
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     */
+    public function deleteReservationAction($reviewId)
+    {
+        $reviewRecipe = $this->recipeReviewRepository->findOneByRecipeReviewId($reviewId);
+        $author = $this->userRepository->findOneByUsername($this->getUser()->getUserName());
+        if (!$reviewRecipe || $author !== $reviewRecipe->getUserReviewRecipeId()) {
+            $this->addFlash('error', 'Unable to remove recipe!');
+        }
+        $this->entityManager->remove($reviewRecipe);
+        $this->entityManager->flush();
+        $this->addFlash('success', 'Review was deleted!');
+        return $this->redirectToRoute('show_all_recipe');
+    }
 }

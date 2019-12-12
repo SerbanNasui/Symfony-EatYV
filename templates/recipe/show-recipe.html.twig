@@ -30,7 +30,7 @@
 						<div class="card-body">
 							<b>Price:</b>
 							{{ recipe.price }}
-							&#8364;
+							{{ 'EUR'|currency_symbol }}
 						</div>
 						<div class="card-header">
 							<b>Persons can come:</b>
@@ -74,7 +74,7 @@
 			</center>
 		{% endif %}
 	</div>
-	<center>
+	<center><br>
 		<a href="/show-reviews-for-specific-recipe/{{ recipe.recipeId }}" class="btn btn-warning">View reviews for this recipe</a>
 	</center>
 	<br><br>
