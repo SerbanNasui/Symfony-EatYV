@@ -33,6 +33,7 @@
 						</div>
 						{% if showReview.getUserReviewRecipeId().getUserId() == app.user.userId %}
 							<div class="card-header">
+								<a href="/edit-review-recipe/{{ showReview.recipeReviewId }}" class="btn btn-dark">Edit review</a>
 								<a href="/delete-recipe-review/{{ showReview.recipeReviewId }}" class="btn btn-danger pull-right">Delete review</a>
 							</div>
 						{% endif %}

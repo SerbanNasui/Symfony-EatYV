@@ -18,6 +18,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Form\RecipeReviewFormType;
+use App\Form\EditReviewRecipeFormType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 
@@ -115,7 +116,6 @@ class RecipeReviewController extends AbstractController
         ]);
     }
 
-    //edit and delete function
     /**
      * @Route("/delete-recipe-review/{reviewId}", name="delete_recipe_review")
      *
@@ -134,5 +134,28 @@ class RecipeReviewController extends AbstractController
         $this->entityManager->flush();
         $this->addFlash('success', 'Review was deleted!');
         return $this->redirectToRoute('show_all_recipe');
+    }
+
+    /**
+     * @Route("/edit-review-recipe/{id}", name="edit_review_recipe")
+     * Method({"GET", "POST"})
+     */
+    public function editReviewRecipeAction(Request $request, $id) 
+    {
+        $reviewRecipe = new RecipeReview();
+        $reviewRecipe = $this->getDoctrine()->getRepository(RecipeReview::class)->find($id);
+        $form = $this->createForm(EditReviewRecipeFormType::class, $reviewRecipe);
+        $form->handleRequest($request);
+
+        if($form->isSubmitted() && $form->isValid()) {
+          $entityManager = $this->getDoctrine()->getManager();
+          $entityManager->flush();
+          return $this->redirectToRoute('show_all_recipe');
+        }
+    
+        $this->addFlash('success', 'Review is up-to-date!');
+        return $this->render('recipe_review/edit-recipe-review.html.twig', array(
+          'form' => $form->createView()
+        ));
     }
 }
