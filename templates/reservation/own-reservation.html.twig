@@ -67,9 +67,11 @@
 					</div>
 				{% endfor %}
 			</div>
-			{# <center>
-				<button onclick="window.history.go(-1); return false;" class="btn btn-orange">Back to profile</button>
-			</center> #}
+		</div>
+	</div>
+	<div class="container">
+		<div class="navigation text-center">
+			{{ knp_pagination_render(reservation) }}
 		</div>
 	</div>
 {% endblock %}

@@ -1,13 +1,6 @@
 <?php
 namespace App\Controller;
-use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\Form\FormError;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
-use Symfony\Component\Form\Extension\Core\Type\TextareaType;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Symfony\Component\HttpFoundation\Response;
-use App\Entity\User;
+
 use App\Entity\UserProfile;
 use App\Service\UploaderHelper;
 use App\Form\UserProfileFormType;
@@ -17,16 +10,6 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
-use App\Repository\UserRepository;
-use Symfony\Component\Form\Extension\Core\Type\SubmitType;
-use Symfony\Component\Form\Extension\Core\Type\PasswordType;
-use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
-use App\Entity\Recipe;
-use Symfony\Component\OptionsResolver\OptionsResolver;
-use App\Form\RecipeFormType;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
-use Symfony\Component\Form\Extension\Core\Type\FileType;
 
 class UserProfileController extends AbstractController
 {

@@ -4,22 +4,13 @@ namespace App\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
-
-use App\Entity\Recipe;
 use App\Entity\Reservation;
-use App\Entity\User;
-use App\Entity\UserProfile;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\Form\Extension\Core\Type\SubmitType;
-use Symfony\Component\Form\Extension\Core\Type\TextareaType;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\OptionsResolver\OptionsResolver;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Form\ReservationFormType;
 use App\Form\EditReservationFormType;
-use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use Knp\Component\Pager\PaginatorInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 
 class ReservationController extends AbstractController
@@ -107,12 +98,18 @@ class ReservationController extends AbstractController
      *
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function showYourOwnReservationAction()
+    public function showYourOwnReservationAction(PaginatorInterface $paginator, Request $request)
     {
         $author = $this->userRepository->findOneByUsername($this->getUser()->getUserName());
+        $reservation = $this->userRepository->createQueryBuilder('p');
         $reservation = [];
         if ($author) {
             $reservation = $this->reservationRepository->findByUserReservaionId($author);
+            $reservation = $paginator->paginate(
+                $reservation,
+                $request->query->getInt('page',1),
+                5
+            );
         }
         return $this->render('reservation/own-reservation.html.twig', [
             'reservation' => $reservation
@@ -167,12 +164,18 @@ class ReservationController extends AbstractController
      * @Route("/show-reservations-for-specific-recipe/{id}", name="show_reservations_for_specific_recipe")
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function showReservationForSpecificRecipe($id)
+    public function showReservationForSpecificRecipe($id, PaginatorInterface $paginator, Request $request)
     {
         $recipeReservation = $this->recipeRepository->findOneByRecipeId($id);
+        $showReservation = $this->reservationRepository->createQueryBuilder('p');
         $showReservation = [];
         if ($recipeReservation) {
             $showReservation = $this->reservationRepository->findByRecipeReservaionId($id);
+            $showReservation = $paginator->paginate(
+                $showReservation,
+                $request->query->getInt('page',1),
+                8
+            );
         }
 
         return $this->render('reservation/show-reservations-for-recipe.html.twig', [

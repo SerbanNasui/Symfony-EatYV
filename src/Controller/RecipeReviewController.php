@@ -4,22 +4,13 @@ namespace App\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
-
-use App\Entity\Recipe;
 use App\Entity\RecipeReview;
-use App\Entity\User;
-use App\Entity\UserProfile;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\Form\Extension\Core\Type\SubmitType;
-use Symfony\Component\Form\Extension\Core\Type\TextareaType;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\OptionsResolver\OptionsResolver;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Form\RecipeReviewFormType;
 use App\Form\EditReviewRecipeFormType;
-use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use Knp\Component\Pager\PaginatorInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 
 class RecipeReviewController extends AbstractController
@@ -103,12 +94,18 @@ class RecipeReviewController extends AbstractController
      * @Route("/show-reviews-for-specific-recipe/{id}", name="show_reviews_for_specific_recipe")
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function showReviewsForSpecificRecipe($id)
+    public function showReviewsForSpecificRecipe($id, PaginatorInterface $paginator, Request $request)
     {
         $recipeReview = $this->recipeRepository->findOneByRecipeId($id);
+        $showReview = $this->recipeRepository->createQueryBuilder('p');
         $showReview = [];
         if ($recipeReview) {
             $showReview = $this->recipeReviewRepository->findByRecipeReviewRecipeId($id);
+            $showReview = $paginator->paginate(
+                $showReview,
+                $request->query->getInt('page',1),
+                10
+            );
         }
 
         return $this->render('recipe_review/show-reviews-for-recipe.html.twig', [

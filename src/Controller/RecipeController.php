@@ -4,24 +4,12 @@ namespace App\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
-
 use App\Entity\Recipe;
-use App\Entity\User;
-use App\Entity\UserProfile;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\Form\Extension\Core\Type\SubmitType;
-use Symfony\Component\Form\Extension\Core\Type\TextareaType;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\OptionsResolver\OptionsResolver;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Form\RecipeFormType;
 use App\Form\EditRecipeFormType;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
-use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Form\Extension\Core\Type\FileType;
 use App\Service\UploaderHelper;
 use Knp\Component\Pager\PaginatorInterface;
 
