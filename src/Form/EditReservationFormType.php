@@ -19,8 +19,8 @@ class EditReservationFormType extends AbstractType
         $builder
         ->add('reservationForFirstName', TextType::class, array('attr' => array('class' => 'form-control')))
         ->add('reservationForSecondName', TextType::class, array('attr' => array('class' => 'form-control')))
-        ->add('personsParticipate', IntegerType::class, array('attr' => array('class' => 'form-control')))
-        ->add('dateTimeComing', DateTimeType::class)
+        ->add('personsParticipate', IntegerType::class, array('attr' => array('min' => 1, 'class' => 'form-control')))
+        ->add('dateTimeComing', DateTimeType::class, array('widget' => 'single_text'))
         ->add('message', TextareaType::class, array(
           'required' => false,
           'attr' => array('class' => 'form-control')

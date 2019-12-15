@@ -20,10 +20,10 @@ class EditRecipeFormType extends AbstractType
   {
     $builder
       ->add('title', TextType::class, array('attr' => array('class' => 'form-control')))
-      ->add('dateStart', DateTimeType::class)
-      ->add('dateEnd', DateTimeType::class)
-      ->add('price', MoneyType::class, array('attr' => array('class' => 'form-control')))
-      ->add('maxNrPersons', IntegerType::class, array('attr' => array('class' => 'form-control')))
+      ->add('dateStart', DateTimeType::class, array('widget' => 'single_text'))
+      ->add('dateEnd', DateTimeType::class, array('widget' => 'single_text'))
+      ->add('price', MoneyType::class, array('attr' => array('min' => 1,'class' => 'form-control')))
+      ->add('maxNrPersons', IntegerType::class, array('attr' => array('min' => 1,'class' => 'form-control')))
       ->add('address', TextType::class, array('attr' => array('class' => 'form-control')))
       ->add('city', TextType::class, array('attr' => array('class' => 'form-control')))
       ->add('country', CountryType::class, array('attr' => array('class' => 'form-control')))

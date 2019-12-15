@@ -52,6 +52,7 @@ class RecipeFormType extends AbstractType
                 'dateStart',
                 DateTimeType::class,
                 [
+                    'widget' => 'single_text',
                     'constraints' => [new NotBlank()],
                     
                 ]
@@ -60,6 +61,7 @@ class RecipeFormType extends AbstractType
                 'dateEnd',
                 DateTimeType::class,
                 [
+                    'widget' => 'single_text',
                     'constraints' => [new NotBlank()],
                     
                 ]
@@ -69,7 +71,9 @@ class RecipeFormType extends AbstractType
                 MoneyType::class,
                 [
                     'constraints' => [new NotBlank()],
-                    'attr' => ['class' => 'form-control']
+                    'attr' => [
+                        'min' => 1,
+                        'class' => 'form-control']
                 ]
             )
             ->add(
@@ -77,7 +81,9 @@ class RecipeFormType extends AbstractType
                 IntegerType::class,
                 [
                     'constraints' => [new NotBlank()],
-                    'attr' => ['class' => 'form-control'],
+                    'attr' => [
+                        'min' => 1,
+                        'class' => 'form-control'],
                 ]
             )
             ->add(

@@ -45,13 +45,16 @@ class ReservationFormType extends AbstractType
                 IntegerType::class,
                 [
                     'constraints' => [new NotBlank()],
-                    'attr' => ['class' => 'form-control']
+                    'attr' => [
+                        'min' => 1,
+                        'class' => 'form-control']
                 ]
             )
             ->add(
                 'dateTimeComing',
                 DateTimeType::class,
                 [
+                    'widget' => 'single_text',
                     'constraints' => [new NotBlank()],
                     
                 ]

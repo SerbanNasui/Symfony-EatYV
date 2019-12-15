@@ -6,6 +6,18 @@
 	<center>
 		<h2>Reviews for this recipe</h2>
 	</center><br>
+		{% set sum = 0 %}
+		{% set nr = 0 %}
+		{% for showReview in showReview %}
+			{% set sum = sum + showReview.grade %}
+			{% set nr = nr + 1 %}
+		{% else %}
+			{% set nr = 1 %}
+		{% endfor %}
+	<center>
+			{% set m = sum / nr %}
+		<b> Rating for this recipe is &#9733;{{ m }}/5 </b>
+	</center><br>
 	<div class="container">
 		<div class="row">
 			<div class="col-md-12 col-lg-12 col-xl-12">
@@ -25,6 +37,7 @@
 							<div class="card-header">
 								<b>Grade:</b>
 								{{ showReview.grade }}
+								&#9733;
 							</div>
 							<div class="card-body">
 								<b>Message:</b>

@@ -3,6 +3,7 @@
 namespace App\Form;
 
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
@@ -25,10 +26,14 @@ class RecipeReviewFormType extends AbstractType
         )
         ->add(
             'grade',
-            IntegerType::class,
+            ChoiceType::class,
             [
                 'constraints' => [new NotBlank()],
-                'attr' => ['class' => 'form-control']
+                'choices' => array('1' => '1', '2' => '2', '3' => '3', '4' => '4', '5' =>'5'),
+                'attr' => [
+                    'min' => 1,
+                    'max' => 5,
+                    'class' => 'form-control']
             ]
         )
         ->add(
