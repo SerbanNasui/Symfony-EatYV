@@ -2,6 +2,7 @@
 
 namespace App\Form;
 
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -20,6 +21,7 @@ class EditRecipeFormType extends AbstractType
   {
     $builder
       ->add('title', TextType::class, array('attr' => array('class' => 'form-control')))
+      ->add('foodCategory', EntityType::class, ['class' => 'App\Entity\FoodCategory'])
       ->add('dateStart', DateTimeType::class, array('widget' => 'single_text'))
       ->add('dateEnd', DateTimeType::class, array('widget' => 'single_text'))
       ->add('price', MoneyType::class, array('attr' => array('min' => 1,'class' => 'form-control')))

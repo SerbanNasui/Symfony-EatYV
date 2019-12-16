@@ -1,9 +1,13 @@
 <?php
 namespace App\Form;
+
+use App\Entity\FoodCategory;
+use App\Entity\Recipe;
+use Doctrine\ORM\Mapping\Entity;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CountryType;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
-use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -13,7 +17,6 @@ use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\MoneyType;
-use Symfony\Component\Validator\Constraints\Positive;
 use Symfony\Component\Validator\Constraints\Image;
 use Symfony\Component\Validator\Constraints\NotNull;
 
@@ -48,6 +51,10 @@ class RecipeFormType extends AbstractType
                     'attr' => ['class' => 'form-control']
                 ]
             )
+            ->add('foodCategory', EntityType::class, [
+                'class' => 'App\Entity\FoodCategory',
+                
+            ])
             ->add(
                 'dateStart',
                 DateTimeType::class,

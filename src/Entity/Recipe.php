@@ -87,6 +87,11 @@ class Recipe
      * @ORM\JoinColumn(name="user_author_id", referencedColumnName="user_id")
      */
     private $userAuthor;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="FoodCategory", inversedBy="recipePost")
+     */
+    private $foodCategory;
     
     /**
      * Get id
@@ -317,5 +322,17 @@ class Recipe
     public function getCountry()
     {
         return $this->country;
+    }
+
+    public function getFoodCategory(): ?FoodCategory
+    {
+        return $this->foodCategory;
+    }
+
+    public function setFoodCategory(?FoodCategory $foodCategory): self
+    {
+        $this->foodCategory = $foodCategory;
+
+        return $this;
     }
 }
