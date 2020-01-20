@@ -57,7 +57,7 @@ class RecipeController extends AbstractController
             $allRecipesQuery,
             $request->query->getInt('page', 1),
             // Items per page
-            5
+            6
         );
         
         return $this->render('home/index.html.twig', [
@@ -124,12 +124,18 @@ class RecipeController extends AbstractController
      *
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function showYourOwnRecipesAction()
+    public function showYourOwnRecipesAction(PaginatorInterface $paginator, Request $request)
     {
         $author = $this->userRepository->findOneByUsername($this->getUser()->getUserName());
+        $recipes = $this->userRepository->createQueryBuilder('p');
         $recipes = [];
         if ($author) {
             $recipes = $this->recipeRepository->findByUserAuthor($author);
+            $recipes = $paginator->paginate(
+                $recipes,
+                $request->query->getInt('page',1),
+                6
+            );
         }
         return $this->render('recipe/own-recipes.html.twig', [
             'recipes' => $recipes

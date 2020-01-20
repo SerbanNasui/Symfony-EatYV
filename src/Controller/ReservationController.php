@@ -108,7 +108,7 @@ class ReservationController extends AbstractController
             $reservation = $paginator->paginate(
                 $reservation,
                 $request->query->getInt('page',1),
-                5
+                12
             );
         }
         return $this->render('reservation/own-reservation.html.twig', [
