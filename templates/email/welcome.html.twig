@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width">
+    <title>Welcome to the Space Bar!</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #f3f3f3;
+            font-family: Helvetica, Arial, sans-serif;
+        }
+        h1 {
+            background-color: #264459;
+            color: #ffffff;
+            padding: 30px 0 50px 0;
+            font-weight: normal;
+        }
+        hr {
+            border: none;
+            border-top: 3px solid #264459;
+            margin: 20px;
+        }
+        .container {
+            background-color: #fefefe;
+            width: 580px;
+            margin: 0 auto;
+        }
+        .bottom {
+            background-color: #efefee;
+        }
+        .block {
+            margin: 0;
+            padding: 10px 20px 20px 20px;
+        }
+        .logo {
+            width: 100%;
+        }
+        .text-center {
+            text-align: center;
+        }
+        .btn {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #264459;
+            color: #fefefe;
+            border: 1px solid #fff;
+            border-radius: 3px;
+            font-size: 20px;
+            font-weight: bold;
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+<div class="body">
+    <div class="container">
+        <div class="header text-center">
+            <a href="{{ url('show_all_recipe') }}">
+                <img src="{{ absolute_url(asset('/images/logo.png')) }}" class="logo" alt="SpaceBar Logo">
+            </a>
+        </div>
+        <div class="content">
+            <h1 class="text-center">Nice to meet you {{ user.userName }}!</h1>
+            <p class="block">
+                Welcome to <strong>the EatYv</strong>, we can't wait to see what you have to cook.
+                Get started on your first recipe and connect with the EatYv community.
+            </p>
+            <p class="block text-center">
+                <a href="{{ url('new_recipe') }}" class="btn">Get writing!</a>
+            </p>
+            <p class="block">
+                Check out our existing articles and share your thoughts in the comments!
+            </p>
+            <p class="block text-center">
+                <a href="{{ url('show_all_recipe') }}" class="btn">Get eating!</a>
+            </p>
+            <p class="block">
+                We're so excited that you've decided to join us in our comunity,
+                it's a friendly one with other creative and insightful writers just like you!
+                Need help from a friend? We're always just a message away.
+            </p>
+        </div>
+        <div class="footer">
+            <p class="block">
+                Cheers,<br><br>
+                Your friendly <em>EatYv Team</em>
+            </p>
+        </div>
+    </div>
+</div>
+</body>
+</html>
