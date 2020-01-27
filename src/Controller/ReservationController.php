@@ -12,6 +12,8 @@ use App\Form\ReservationFormType;
 use App\Form\EditReservationFormType;
 use Knp\Component\Pager\PaginatorInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
+use Symfony\Component\Mailer\MailerInterface;
+use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 
 class ReservationController extends AbstractController
 {
@@ -60,7 +62,7 @@ class ReservationController extends AbstractController
      * @Method({"GET", "POST"})
      * @Security("is_granted('IS_AUTHENTICATED_FULLY')")
      */
-    public function newReservationAction(Request $request, $id)
+    public function newReservationAction(Request $request, $id, MailerInterface $mailer)
     {
         $reservation = new Reservation();
 
@@ -79,6 +81,20 @@ class ReservationController extends AbstractController
             //$recipe = $reservationForm['recipeReservaionId']->getData();
             // $reservation->setUserReservaionId($user);
             //$reservation->setRecipeReservaionId($recipe);
+
+            $email = (new TemplatedEmail())
+                ->from('infomailer@eatyourvegetabels.com')
+                ->to($reservationAuthor->getEmail())
+                ->subject('Created new Reservation')
+                ->htmlTemplate('email/notify_user_created_reservation.html.twig')
+                //->text("You created a reservation for recipe: {$reservationRecipe->getTitle()}! ❤️")
+                ->context([
+                    'reservationRecipe' => $reservationRecipe,
+                    'reservationAuthor' => $reservationAuthor
+                ]);
+                
+
+            $mailer->send($email);
             
             $em = $this->getDoctrine()->getManager();
             $em->persist($reservation);
