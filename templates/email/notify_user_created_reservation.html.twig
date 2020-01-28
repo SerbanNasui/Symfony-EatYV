@@ -1,87 +1,95 @@
 <!doctype html>
 <html lang="en">
-<head>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <meta name="viewport" content="width=device-width">
-    <title>Create reservation!</title>
-    <style>
-        body {
-            margin: 0;
-            padding: 0;
-            background-color: #f3f3f3;
-            font-family: Helvetica, Arial, sans-serif;
-        }
-        h1 {
-            background-color: orange;
-            color: #ffffff;
-            padding: 30px 0 50px 0;
-            font-weight: normal;
-        }
-        hr {
-            border: none;
-            border-top: 3px solid #264459;
-            margin: 20px;
-        }
-        .container {
-            background-color: #fefefe;
-            width: 580px;
-            margin: 0 auto;
-        }
-        .bottom {
-            background-color: #efefee;
-        }
-        .block {
-            margin: 0;
-            padding: 10px 20px 20px 20px;
-        }
-        .logo {
-            width: 100%;
-        }
-        .text-center {
-            text-align: center;
-        }
-        .btn {
-            display: inline-block;
-            padding: 10px 20px;
-            background-color: orange;
-            color: #fefefe;
-            border: 1px solid #fff;
-            border-radius: 3px;
-            font-size: 20px;
-            font-weight: bold;
-            text-decoration: none;
-        }
-    </style>
-</head>
-<body>
-<div class="body">
-    <div class="container">
-        <div class="header text-center">
-            <a href="{{ url('show_all_recipe') }}">
-                <img src="{{ absolute_url(asset('/images/logo.png')) }}" class="logo" alt="SpaceBar Logo">
-            </a>
-        </div>
-        <div class="content">
-            <h1 class="text-center">Hello {{ reservationAuthor.getUserName() }} <br> You create reservation at <strong>{{ reservationRecipe.getTitle() }}</strong>!</h1>
-            <p class="block">
-                Check out your existing reservations and manage them!
-            </p>
-            <p class="block text-center">
-                <a href="{{ url('own_reservation') }}" class="btn">Check your reservations!</a>
-            </p>
-            <p class="block">
-                We're so excited that you've decided to use our comunity,
-                it's a friendly one with other creative and insightful writers just like you!
-                Need help from a friend? We're always just a message away.
-            </p>
-        </div>
-        <div class="footer">
-            <p class="block">
-                Cheers,<br><br>
-                Your friendly <em>EatYv Team</em>
-            </p>
-        </div>
-    </div>
-</div>
-</body>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+		<meta name="viewport" content="width=device-width">
+		<title>Create reservation!</title>
+		<style>
+			body {
+				margin: 0;
+				padding: 0;
+				background-color: #f3f3f3;
+				font-family: Helvetica, Arial, sans-serif;
+			}
+			h1 {
+				background-color: orange;
+				color: #ffffff;
+				padding: 30px 0 50px;
+				font-weight: normal;
+			}
+			hr {
+				border: none;
+				border-top: 3px solid #264459;
+				margin: 20px;
+			}
+			.container {
+				background-color: #fefefe;
+				width: 580px;
+				margin: 0 auto;
+			}
+			.bottom {
+				background-color: #efefee;
+			}
+			.block {
+				margin: 0;
+				padding: 10px 20px 20px;
+			}
+			.logo {
+				width: 100%;
+			}
+			.text-center {
+				text-align: center;
+			}
+			.btn {
+				display: inline-block;
+				padding: 10px 20px;
+				background-color: orange;
+				color: #fefefe;
+				border: 1px solid #fff;
+				border-radius: 3px;
+				font-size: 20px;
+				font-weight: bold;
+				text-decoration: none;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="body">
+			<div class="container">
+				<div class="header text-center">
+					<a href="{{ url('show_all_recipe') }}">
+						<img src="{{ absolute_url(asset('/images/logo.png')) }}" class="logo" alt="SpaceBar Logo">
+					</a>
+				</div>
+				<div class="content">
+					<h1 class="text-center">Hello
+						{{ reservationAuthor.getUserName() }}
+						<br>
+						You create reservation for recipe with title:
+						<strong>{{ reservationRecipe.getTitle() }}</strong>!
+						<br>
+						This recipe is created by
+						{{ reservationRecipe.getAuthor().getUserName() }}!</h1>
+					<p class="block">
+						Check out your existing reservations and manage them!
+					</p>
+					<p class="block text-center">
+						<a href="{{ url('own_reservation') }}" class="btn">Check your reservations!</a>
+					</p>
+					<p class="block">
+						We're so excited that you've decided to use our comunity,
+						                it's a friendly one with other creative and insightful writers just like you!
+						                Need help from a friend? We're always just a message away.
+					</p>
+				</div>
+				<div class="footer">
+					<p class="block">
+						Cheers,<br><br>
+						Your friendly
+						<em>EatYv Team</em>
+					</p>
+				</div>
+			</div>
+		</div>
+	</body>
 </html>

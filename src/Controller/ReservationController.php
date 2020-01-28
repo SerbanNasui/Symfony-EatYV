@@ -87,14 +87,26 @@ class ReservationController extends AbstractController
                 ->to($reservationAuthor->getEmail())
                 ->subject('Created new Reservation')
                 ->htmlTemplate('email/notify_user_created_reservation.html.twig')
-                //->text("You created a reservation for recipe: {$reservationRecipe->getTitle()}! ❤️")
                 ->context([
                     'reservationRecipe' => $reservationRecipe,
                     'reservationAuthor' => $reservationAuthor
                 ]);
+
+                
+                $author = $reservationRecipe->getAuthor();
+                $emailToRecipeAuthor = (new TemplatedEmail())
+                ->from('infomailer@eatyourvegetabels.com')
+                ->to($author->getEmail())
+                ->subject('Have a new reservation')
+                ->htmlTemplate('email/notify_user_have_reservation.html.twig')
+                 ->context([
+                     'reservationRecipe' => $reservationRecipe,
+                     'reservation' => $reservation
+                 ]);
                 
 
             $mailer->send($email);
+            $mailer->send($emailToRecipeAuthor);
             
             $em = $this->getDoctrine()->getManager();
             $em->persist($reservation);
