@@ -1,0 +1,64 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+	{% include('nav.html.twig') %}
+	<div class="container">
+		<center>
+			<h1>Recipes</h1>
+		</center><br>
+		<div class="row">
+			{% for res in results %}
+				<div class="col-md-6">
+					<div class="card bg-light card-register-login">
+						<div class="card-body">
+							<br>
+							<div class="card-header">
+								<center><img src="{{ asset('uploads/') ~ res.image }}" width="300"></center>
+							</div>
+							<div class="card-body">
+								<b>Title:</b>
+								{{ res.title }}
+								<h6>
+									<i>Food type:
+										{{ res.foodCategory }}</i>
+								</h6>
+							</div>
+							<div class="card-header">
+								<b>Date start/end:</b>
+								{{ res.dateStart|date("d/m/Y g:ia") }}
+								|
+								{{ res.dateEnd|date("d/m/Y g:ia") }}
+							</div>
+							<div class="card-body">
+								<b>Price:</b>
+								{{ res.price }}
+								{{ 'EUR'|currency_symbol }}
+							</div>
+							<div class="card-header">
+								<b>Address:</b>
+								{{ res.address }}
+								{{ res.city }}
+								{{ res.country }}
+							</div>
+							<div class="card-body">
+								<center>
+									<a href="/show-recipe/{{ res.recipeId }}" class="btn btn-orange">Show recipe</a>
+								</center>
+							</div>
+						</div>
+					</div><br><br><br>
+				</div>
+			{% else %}
+				<div class="col-6 offset-3">
+					<div class="card bg-light card-register-login">
+						<div class="card-body">
+							<br><div class="card-header">
+								<p>No recipes to display for
+									{{ search_term }}</p>
+							</div>
+						</div>
+					</div>
+				{% endfor %}
+			</div>
+		</div>
+      <div class="container">
+	{% endblock %}

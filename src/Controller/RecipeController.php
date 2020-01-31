@@ -9,8 +9,10 @@ use Symfony\Component\HttpFoundation\Request;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Form\RecipeFormType;
 use App\Form\EditRecipeFormType;
+use App\Service\LuceneSearching;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use App\Service\UploaderHelper;
+use Doctrine\Common\Collections\ArrayCollection;
 use Knp\Component\Pager\PaginatorInterface;
 
 
@@ -48,6 +50,8 @@ class RecipeController extends AbstractController
     public function viewAllRecipesAction(PaginatorInterface $paginator, Request $request)
     {
         $recipesRepository = $this->getDoctrine()->getManager()->getRepository(Recipe::class);
+        $search="j";
+        $results ="a";
         $allRecipesQuery = $recipesRepository->createQueryBuilder('p')
             ->where('p.recipeId != :recipeId')
             ->setParameter('recipeId', 'canceled')
@@ -61,12 +65,43 @@ class RecipeController extends AbstractController
         );
         
         return $this->render('home/index.html.twig', [
-            'recipes' => $recipes
+            'recipes' => $recipes,
+            'search' => $search, 
+            'results' =>$results
         ]);
+    }
     
+    /**
+     *
+     * @Route("/search", name="search")
+     * Method({"GET"})
+     */
+    public function getForLuceneQuery(PaginatorInterface $paginator, Request $request) 
+    {
+        $searchQuery = $request -> get('search');
+        $allRecipes = $this->recipeRepository->findAll();
+        foreach($allRecipes as $re)
+        {
+            LuceneSearching::updateLuceneIndex($re);
+        }
 
-        // $recipes = $this->getDoctrine()->getRepository(Recipe::class)->findAll();
-        // return $this->render('home/index.html.twig', array('recipes' => $recipes));
+
+        $hits = LuceneSearching::getLuceneIndex() -> find($searchQuery);   
+        
+        $results = new ArrayCollection();
+        $em = $this -> getDoctrine() -> getManager();
+        foreach($hits as $hit) {
+            $document = $hit -> getDocument();
+            $res = $em -> getRepository('App:Recipe') -> find($document -> key);
+            if($res != null)
+            {
+                $results -> add($res);
+            }
+        } 
+        return $this -> render('recipe/luceneResults.html.twig', array(
+            'results' => $results,
+            'search_term' =>  $searchQuery
+        ));
     }
 
     /**
@@ -82,17 +117,19 @@ class RecipeController extends AbstractController
         $author = $this->userRepository->findOneByUsername($this->getUser()->getUserName());
         $recipePost->setUserAuthor($author);
         $form = $this->createForm(RecipeFormType::class, $recipePost);
+    
         $form->handleRequest($request);
         // Check is valid
         if ($form->isSubmitted() && $form->isValid()) {
-
-           
            /** @var UploadedFile $uploadedFile */
            $uploadedFile = $form['image']->getData();
            if ($uploadedFile) {
                $newFilename = $uploaderHelper->uploadImage($uploadedFile);
                $recipePost->setImage($newFilename);
            }
+
+           $luceneSearch = new LuceneSearching();
+           $luceneSearch -> updateLuceneIndex($recipePost);
 
             $this->entityManager->persist($recipePost);
             $this->entityManager->flush($recipePost);
@@ -160,6 +197,8 @@ class RecipeController extends AbstractController
                 $newFilename = $uploaderHelper->uploadImage($uploadedFile);
                 $recipe->setImage($newFilename);
             }
+            $luceneSearch = new LuceneSearching();
+            $luceneSearch -> updateLuceneIndex($recipe);
             $entityManager = $this->getDoctrine()->getManager();
              $entityManager->flush();
              return $this->redirectToRoute('user_own_recipes');
@@ -188,6 +227,8 @@ class RecipeController extends AbstractController
         }
         $this->entityManager->remove($recipe);
         $this->entityManager->flush();
+        $luceneSearch = new LuceneSearching();
+        $luceneSearch -> deleteLuceneIndex($recipe);
         $this->addFlash('success', 'Recipe was deleted!');
         return $this->redirectToRoute('user_own_recipes');
     }

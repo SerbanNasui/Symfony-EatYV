@@ -1,3 +1,12 @@
+How to use it:
+
+1. composer install
+2. create database
+3. migrate database
+4. Download this: https://drive.google.com/open?id=1_g-SDltmhXFrUshYhX32xqtU8ke3frgG and put it in vendor folder
+5. symfony server:start
+
+
 composer create-project symfony/skeleton Symfony-EatYV
 
 composer require annotations twig
