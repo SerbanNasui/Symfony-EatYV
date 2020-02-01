@@ -1,0 +1,69 @@
+easy_admin:
+   site_name: EatYV Admin Panel
+
+   design:
+        brand_color: '#F56416'
+        assets:
+          favicon: '/images/favicon.png'
+        menu:
+            - {label: "Recipes" }
+            - {entity: Recipe, icon: "dashboard"}
+            - {entity: FoodCategory, icon: "bell"}
+
+            - {label: "Recipes " }
+            - {entity: Reservation, icon: "book"}
+            - {entity: RecipeReview, icon: "star"}
+
+            - {label: "Settings" }
+            - {entity: User, icon: "user"}
+    
+   user:
+      name_property_path: 'email' 
+   entities:
+      Recipe:
+          class: App\Entity\Recipe
+          label: "Recipes"
+          disabled_actions: ['new', 'edit']
+          list:
+            collapse_actions: true
+            actions: ['show', 'delete']
+            batch_actions: ['delete']
+            title: "Recipe List"
+            fields: ['recipeId','title', 'food_category', 'dateStart', 'dateEnd', 'price','maxNrPersons', 'address', 'city', 'country']
+      FoodCategory:
+          class: App\Entity\FoodCategory
+          label: "Food category"
+          form:
+            fields:
+              - name
+          list:
+            collapse_actions: true
+            actions: ['edit', 'delete']
+            batch_actions: ['delete']
+            title: "Food Category List"
+      Reservation:
+          class: App\Entity\Reservation
+          label: "Reservations"
+          disabled_actions: ['new','edit']
+          list:
+            collapse_actions: true
+            actions: ['show', 'delete']
+            batch_actions: ['delete']
+            title: "Reservation List"
+      RecipeReview:
+          class: App\Entity\RecipeReview
+          label: "Reviews"
+          disabled_actions: ['new','edit']
+          list:
+            collapse_actions: true
+            actions: ['show', 'delete']
+            batch_actions: ['delete']
+            title: "Review List"
+      User:
+          class: App\Entity\User
+          label: "Users"
+          list:
+            collapse_actions: true
+            actions: ['show', 'edit', 'delete']
+            batch_actions: ['delete']
+            title: "Users List"

@@ -335,4 +335,11 @@ class Recipe
 
         return $this;
     }
+
+    public function __toString() {
+        if(!is_null($this->foodCategory)) {
+            return 'null';
+        }
+        return $this->foodCategory;
+    }
 }
