@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Recipe;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Entity\Reservation;
@@ -62,7 +63,7 @@ class ReservationController extends AbstractController
      * @Method({"GET", "POST"})
      * @Security("is_granted('IS_AUTHENTICATED_FULLY')")
      */
-    public function newReservationAction(Request $request, $id, MailerInterface $mailer)
+    public function newReservationAction(Request $request, $id, MailerInterface $mailer, Recipe $maxNrPersons)
     {
         $reservation = new Reservation();
 
@@ -74,14 +75,10 @@ class ReservationController extends AbstractController
 
         $reservationForm = $this->createForm(ReservationFormType::class, $reservation);
         $reservationForm->handleRequest($request);
-  
-        if ($reservationForm->isSubmitted() && $reservationForm->isValid()) {
-            
-            // $user = $form['userReservaionId']->getData();
-            //$recipe = $reservationForm['recipeReservaionId']->getData();
-            // $reservation->setUserReservaionId($user);
-            //$reservation->setRecipeReservaionId($recipe);
 
+
+        if ($reservationForm->isSubmitted() && $reservationForm->isValid() && $reservationForm['personsParticipate']->getData() <= $maxNrPersons->getMaxNrPersons()) {
+            
             $email = (new TemplatedEmail())
                 ->from('infomailer@eatyourvegetabels.com')
                 ->to($reservationAuthor->getEmail())
@@ -107,12 +104,16 @@ class ReservationController extends AbstractController
 
             $mailer->send($email);
             $mailer->send($emailToRecipeAuthor);
-            
+
+            $maxNrPersons->setMaxNrPersons($maxNrPersons->getMaxNrPersons() - $reservationForm['personsParticipate']->getData());
+
             $em = $this->getDoctrine()->getManager();
             $em->persist($reservation);
             $em->flush();
 
             return $this->redirectToRoute('own_reservation', array('reservationId' => $reservation->getReservationId()));
+        } else if($reservationForm['personsParticipate']->getData() >= $maxNrPersons->getMaxNrPersons()){
+            $this->addFlash('warning', 'You can add only '.$maxNrPersons->getMaxNrPersons().' persons for this reservation!!!');
         }
 
         return $this->render('reservation/new-reservation.html.twig', array(

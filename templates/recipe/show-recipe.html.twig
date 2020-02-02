@@ -57,8 +57,12 @@
 								<a href="/edit-recipe/{{ recipe.recipeId }}" class="btn btn-dark">Edit recipe</a>
 								<a href="{{ path('delete_recipe', {'recipeId': recipe.recipeId}) }}" class="btn btn-danger pull-right">Delete recipe</a>
 							{% else %}
+								{% if recipe.maxNrPersons > 0 %}
 								<a href="/new-reservation/{{ recipe.recipeId }}" class="btn btn-success">Create reservation</a>
 								<a href="/new-recipe-review/{{ recipe.recipeId }}" class="btn btn-secondary pull-right">Create review</a>
+								{% else %}
+								<p class="max-limit"><strong>Sorry!!! You can't create reservation for this recipe</strong></p>
+								{% endif %}
 								<br><br><center>
 									<a href="/show-owner-profile/{{ recipe.getAuthor().getUserId() }}" class="btn btn-orange">See who created this recipe</a>
 								</center>
