@@ -14,6 +14,7 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 use App\Service\UploaderHelper;
 use Doctrine\Common\Collections\ArrayCollection;
 use Knp\Component\Pager\PaginatorInterface;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 
 
 class RecipeController extends AbstractController
@@ -106,6 +107,7 @@ class RecipeController extends AbstractController
 
     /**
      * @Route("/new-recipe", name="new_recipe")
+     * @Security("is_granted('IS_AUTHENTICATED_FULLY')")
      *
      * @param Request $request
      *
@@ -158,6 +160,7 @@ class RecipeController extends AbstractController
 
     /**
      * @Route("/own-recipes", name="user_own_recipes")
+     * @Security("is_granted('IS_AUTHENTICATED_FULLY')")
      *
      * @return \Symfony\Component\HttpFoundation\Response
      */
@@ -182,6 +185,7 @@ class RecipeController extends AbstractController
 
     /**
      * @Route("/edit-recipe/{id}", name="edit_recipe")
+     * @Security("is_granted('IS_AUTHENTICATED_FULLY')")
      * Method({"GET", "POST"})
      */
     public function editRecipeAction(Request $request, $id, UploaderHelper $uploaderHelper) 
@@ -212,6 +216,7 @@ class RecipeController extends AbstractController
 
     /**
      * @Route("/delete-recipe/{recipeId}", name="delete_recipe")
+     * @Security("is_granted('IS_AUTHENTICATED_FULLY')")
      *
      * @param $recipeId
      *

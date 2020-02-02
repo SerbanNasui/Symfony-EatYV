@@ -124,6 +124,7 @@ class ReservationController extends AbstractController
 
     /**
      * @Route("/own-reservation", name="own_reservation")
+     * @Security("is_granted('IS_AUTHENTICATED_FULLY')")
      *
      * @return \Symfony\Component\HttpFoundation\Response
      */
@@ -147,6 +148,7 @@ class ReservationController extends AbstractController
     
     /**
      * @Route("/edit-reservation/{id}", name="edit_reservation")
+     * @Security("is_granted('IS_AUTHENTICATED_FULLY')")
      * Method({"GET", "POST"})
      */
     public function editReservationAction(Request $request, $id) 
@@ -170,7 +172,7 @@ class ReservationController extends AbstractController
     
     /**
      * @Route("/delete-reservation/{reservationId}", name="delete_reservation")
-     *
+     * @Security("is_granted('IS_AUTHENTICATED_FULLY')")
      * @param $reservationId
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
@@ -191,6 +193,7 @@ class ReservationController extends AbstractController
 
     /**
      * @Route("/show-reservations-for-specific-recipe/{id}", name="show_reservations_for_specific_recipe")
+     * @Security("is_granted('IS_AUTHENTICATED_FULLY')")
      * @return \Symfony\Component\HttpFoundation\Response
      */
     public function showReservationForSpecificRecipe($id, PaginatorInterface $paginator, Request $request)

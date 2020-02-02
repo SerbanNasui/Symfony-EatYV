@@ -5,6 +5,7 @@
 {% endblock %}
 
 {% block body %}
+	{% if app.user %}
 	{% include('nav.html.twig') %}<br>
 	<div class="container">
 		<div class="row">
@@ -83,4 +84,52 @@
 		<a href="/show-reviews-for-specific-recipe/{{ recipe.recipeId }}" class="btn btn-warning">View reviews for this recipe</a>
 	</center>
 	<br><br>
+	{% else %}
+		{% include('nav.html.twig') %}<br>
+	<div class="container">
+		<div class="row">
+			<div class="col-6 offset-3">
+				<div class="card bg-light card-register-login">
+					<div class="card-body">
+						<br><div class="card-header">
+							<center><img src="{{ asset('uploads/') ~ recipe.image }}" width="300"></center>
+						</div>
+						<div class="card-body">
+							<b>Title:</b>
+							{{ recipe.title }} 
+							<h6><i>Food type: {{ recipe.foodCategory }}</i></h6>
+						</div>
+						<div class="card-header">
+							<p>
+								<b>Date start:</b>
+								{{ recipe.dateStart|date("d/m/Y g:ia") }}</p>
+							<p>
+								<b>Date end:</b>
+								{{ recipe.dateEnd|date("d/m/Y g:ia") }}</p>
+						</div>
+						<div class="card-body">
+							<b>Price:</b>
+							{{ recipe.price }}
+							{{ 'EUR'|currency_symbol }}
+						</div>
+						<div class="card-header">
+							<b>Persons can come:</b>
+							{{ recipe.maxNrPersons }}
+						</div>
+						<div class="card-body">
+							<b>Description:</b>
+							{{ recipe.description }}
+						</div>
+						<div class="card-body">
+							<center>
+								<button button onclick="window.history.go(-1); return false;" class="btn btn-dark">Back</button>
+							</center>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<br><br>
+	{% endif %}
 {% endblock %}

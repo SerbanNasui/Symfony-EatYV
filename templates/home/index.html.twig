@@ -19,8 +19,42 @@
 	{% else %}
 		<div class="background-image">
 			<div class="small-6 small-centered columns">
-				<a href="{{ path('app_register') }}" class="btn btn-orange">Get Started</a>
-				<a href="{{ path('app_login') }}" class="btn btn-orange">Sign In</a>
+				<center><img src="/images/logo.png" alt="Logo" width="400"/><br></center>
+				<p class="description-text"><strong>EatYV</strong> is a community marketplace/platform where people host,<br> discover and book unique venues around the world.</p><br>
+				<center>
+					<a href="{{ path('app_register') }}" class="btn btn-orange sizes">Get Started</a>
+					<a href="{{ path('app_login') }}" class="btn btn-orange sizes">Sign In</a>
+				<br><br>
+			</div>
+		</div>
+		<br><br>
+		<div class="container">
+			<form action= "{{ path('search') }}" method="get" class="form-inline my-2 my-lg-0">
+          		<input  class="form-control mr-sm-2" name="search"type="text" placeholder="Search" aria-label="Search">
+          		<button class="btn btn-orange my-2 my-sm-0" type="submit">Search</button>
+        	</form><br>
+			<div class="row">
+				{% for recipe in recipes %}
+					<div class="col col-md-3">
+						<div class="card">
+                			<a href="/show-recipe/{{ recipe.recipeId }}"><img class="card-img-top img-fluid" src="{{ asset('uploads/') ~ recipe.image }}" alt="Card image"></a>
+                			<div class="card-block">
+                    			<h4 class="card-title"><center>{{ recipe.title }}</center></h4>
+                    			<p class="card-text">
+								<center>
+									<i class="fa fa-cutlery" aria-hidden="true"></i>{{ recipe.foodCategory }}<br>
+									<i class="fa fa-location-arrow" aria-hidden="true"></i> {{ recipe.city }}<br>
+									<i class="fa fa-calendar-check-o" aria-hidden="true"></i>{{ recipe.dateStart|date("d/m/Y g:ia")}}<br>
+									<i class="fa fa-calendar-times-o" aria-hidden="true"></i>{{ recipe.dateEnd|date("d/m/Y g:ia")}}<br>
+									<i class="fa fa-money" aria-hidden="true"></i>{{recipe.price}} {{ 'EUR'|currency_symbol }}</center>
+								</p>
+                			</div>
+            			</div>
+					</div>
+				{% endfor %}
+			</div><br>
+			<div class="navigation text-center">
+				{{ knp_pagination_render(recipes) }}
 			</div>
 		</div>
 	{% endif %}

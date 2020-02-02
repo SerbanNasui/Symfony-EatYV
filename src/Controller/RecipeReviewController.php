@@ -92,6 +92,7 @@ class RecipeReviewController extends AbstractController
 
     /**
      * @Route("/show-reviews-for-specific-recipe/{id}", name="show_reviews_for_specific_recipe")
+     * @Security("is_granted('IS_AUTHENTICATED_FULLY')")
      * @return \Symfony\Component\HttpFoundation\Response
      */
     public function showReviewsForSpecificRecipe($id, PaginatorInterface $paginator, Request $request)
@@ -115,6 +116,7 @@ class RecipeReviewController extends AbstractController
 
     /**
      * @Route("/delete-recipe-review/{reviewId}", name="delete_recipe_review")
+     * @Security("is_granted('IS_AUTHENTICATED_FULLY')")
      *
      * @param $reviewId
      *
@@ -135,6 +137,7 @@ class RecipeReviewController extends AbstractController
 
     /**
      * @Route("/edit-review-recipe/{id}", name="edit_review_recipe")
+     * @Security("is_granted('IS_AUTHENTICATED_FULLY')")
      * Method({"GET", "POST"})
      */
     public function editReviewRecipeAction(Request $request, $id) 

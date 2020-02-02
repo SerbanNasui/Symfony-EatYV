@@ -1,0 +1,15 @@
+.description-text {
+    font-size: 20px;
+    color: rgb(33, 33, 33);
+}
+
+.description-text:hover {
+    font-size: 50px;
+    color: rgb(3, 3, 3);
+    box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.5), 0 6px 20px 0 rgba(0, 0, 0, 0.30);
+}
+
+.sizes {
+    font-size: 30px;
+    border-radius: 15px;
+}

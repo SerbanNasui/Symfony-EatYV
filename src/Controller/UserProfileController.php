@@ -10,6 +10,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 
 class UserProfileController extends AbstractController
 {
@@ -44,6 +45,7 @@ class UserProfileController extends AbstractController
 
     /**
      * @Route("/create-profile", name="create_profile")
+     * @Security("is_granted('IS_AUTHENTICATED_FULLY')")
      *
      * @param Request $request
      *
@@ -78,6 +80,7 @@ class UserProfileController extends AbstractController
 
     /**
      * @Route("/profile", name="user_profile")
+     * @Security("is_granted('IS_AUTHENTICATED_FULLY')")
      *
      * @return \Symfony\Component\HttpFoundation\Response
      */
@@ -95,6 +98,7 @@ class UserProfileController extends AbstractController
 
     /**
      * @Route("/user-profile/edit/{userId}", name="edit_user_profile")
+     * @Security("is_granted('IS_AUTHENTICATED_FULLY')")
      * Method({"GET", "POST"})
      */
     public function editUserProfileAction(Request $request, $userId, UploaderHelper $uploaderHelper)
@@ -126,6 +130,7 @@ class UserProfileController extends AbstractController
 
     /**
      * @Route("/delete-profile/{userId}", name="delete_user_profile")
+     * @Security("is_granted('IS_AUTHENTICATED_FULLY')")
      *
      * @param $userId
      *
